@@ -363,51 +363,75 @@
   }
 
   // ── GUESTS (pre-autorizados) ─────────────────────────
-  async function loadGuests(){
-    const container = document.getElementById('guests-container');
-    container.innerHTML='<div class="loading-state">Cargando...</div>';
-    try {
-      const snap = await getDocs(query(collection(db,'invited_guests'),orderBy('nombre_lower','asc')));
-      const guests=[];
-      snap.forEach(d=>guests.push({id:d.id,...d.data()}));
+async function loadGuests(){
+  const container = document.getElementById('guests-container');
+  container.innerHTML = '<div class="loading-state">Cargando...</div>';
 
-      document.getElementById('stat-guests').textContent = guests.length;
+  try {
+    const snap = await getDocs(query(collection(db,'invitados'), orderBy('nombre','asc')));
+    
+    let guests = [];
+    snap.forEach(d => guests.push({id: d.id, ...d.data()}));
 
-      if(guests.length===0){
-        container.innerHTML='<table class="data-table"><thead><tr><th>Nombre</th><th>Boletos asignados</th><th>Estado</th><th>Acciones</th></tr></thead><tbody><tr class="empty-row"><td colspan="4">No hay invitados pre-autorizados.</td></tr></tbody></table>';
-        return;
-      }
+    document.getElementById('stat-guests').textContent = guests.length;
 
-      let html=`<table class="data-table">
-        <thead><tr>
-          <th>Nombre</th><th>Boletos asignados</th><th>¿Registrado?</th><th>Eliminar</th>
-        </tr></thead><tbody>`;
-
-      for(const g of guests){
-        const yaReg = registros.some(r=>r.nombre_lower===g.nombre_lower);
-        html+=`<tr>
-          <td class="td-name">${escHtml(g.nombre)}</td>
-          <td>
-            <div class="inline-edit" id="ie-${escHtml(g.id)}">
-              <button class="btn-dec" onclick="adjTickets('${escHtml(g.id)}','${escHtml(g.nombre)}','${escHtml(g.nombre_lower)}',-1)" ${g.boletos<=1?'disabled':''}>−</button>
-              <span class="inline-num" id="inum-${escHtml(g.id)}">${g.boletos}</span>
-              <button class="btn-inc" onclick="adjTickets('${escHtml(g.id)}','${escHtml(g.nombre)}','${escHtml(g.nombre_lower)}',1)">+</button>
-              <button class="btn-save-tickets" id="isave-${escHtml(g.id)}" onclick="saveTickets('${escHtml(g.id)}','${escHtml(g.nombre_lower)}')">Guardar</button>
-            </div>
-          </td>
-          <td>${yaReg?'<span class="badge badge-ok">✦ Confirmado</span>':'<span class="td-muted">Pendiente</span>'}</td>
-          <td>
-            <button class="btn-tbl btn-tbl-red" onclick="openDelGuestModal('${escHtml(g.id)}','${escHtml(g.nombre)}')">Eliminar</button>
-          </td>
-        </tr>`;
-      }
-      html+='</tbody></table>';
-      container.innerHTML=html;
-    } catch(e){
-      console.error(e);
-      container.innerHTML='<p style="color:var(--red);font-size:12px;">Error al cargar invitados.</p>';
+    if(guests.length === 0){
+      container.innerHTML = `
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Boletos asignados</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="empty-row">
+              <td colspan="4">Sin invitados pre-autorizados.</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+      return;
     }
+
+    let html = `
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Boletos asignados</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    guests.forEach((g, i) => {
+      html += `
+        <tr>
+          <td class="td-muted">${String(i+1).padStart(2,'0')}</td>
+          <td class="td-name">${escHtml(g.nombre)}</td>
+          <td>${g.boletos || 1}</td>
+          <td>
+            <button class="btn-tbl btn-tbl-red" onclick="openDelGuest('${g.id}','${escHtml(g.nombre)}')">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+
+  } catch(e){
+    console.error(e);
+    container.innerHTML = '<p style="color:var(--red);font-size:12px;">Error al cargar invitados.</p>';
   }
+}
 
   // ── TICKET ADJUSTMENT ────────────────────────────────
   const pendingTickets = {}; // id -> nuevo valor
