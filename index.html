@@ -606,21 +606,15 @@
     </p>
 
     <div class="form-card reveal">
-      <h3 class="form-title">Confirmar<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-light);">asistencia</em></h3>
+      <!-- <h3 class="form-title">Confirmar<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-light);">asistencia</em></h3>
+
       <p class="form-subtitle">
         Escribe el nombre de a quien va dirigida la invitacion para verificarla.<br>
       </p>
-
-      <div class="alert-box">
-        <div class="alert-icon">🔑</div>
-        <div class="alert-text">
-          <strong>Guarda tu contraseña.</strong> La necesitarás para editar el número de lugares o cancelar tu asistencia. Anótala en un lugar seguro antes de continuar.
-        </div>
-      </div>
-
+      -->
       <div class="field">
         <label for="nombre">Nombre del invitado</label>
-        <input type="text" id="nombre" placeholder="Primer Nombre y Apellido ( sin acentos )" autocomplete="off" oninput="resetLookup()">
+        <input type="text" id="nombre" placeholder="Escribe el nombre a quien va dirigida la invitacion. ( sin acentos )" autocomplete="off" oninput="resetLookup()">
         <p class="error-msg" id="err-nombre">Por favor ingresa tu nombre completo (nombre y apellido).</p>
         <p class="error-msg" id="err-no-invitado">Este nombre no está en la lista de invitados. Verifica cómo está registrado.</p>
         <p class="error-msg" id="err-duplicado">Este nombre ya confirmó su asistencia. <a href="editar.html" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,.3);">Editar mi registro →</a></p>
@@ -644,8 +638,17 @@
           <p class="error-msg" id="err-boletos">Por favor selecciona cuántos lugares usarás.</p>
         </div>
       </div>
+      
 
       <div class="extra-fields" id="extra-fields">
+        
+        <div class="alert-box">
+          <div class="alert-icon">🔑</div>
+            <div class="alert-text">
+          <strong>Guarda tu contraseña.</strong> La necesitarás para editar el número de lugares o cancelar tu asistencia. Anótala en un lugar seguro antes de continuar.
+        </div>
+      </div>
+
         <div class="field">
           <label for="password">Tu contraseña personal</label>
           <input type="password" id="password" placeholder="Elige una contraseña (mín. 4 caracteres)" oninput="checkPassAlert()">
