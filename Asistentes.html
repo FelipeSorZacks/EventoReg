@@ -23,8 +23,11 @@
   .back-link:hover { opacity: 0.7; }
   .back-link:hover svg { transform: translateX(-3px); }
   .back-link svg { transition: transform 0.2s; }
-  .btn-admin { display: inline-flex; align-items: center; gap: 8px; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; border: 1px solid rgba(201,168,76,0.15); padding: 8px 16px; transition: all 0.2s; }
-  .btn-admin:hover { border-color: var(--gold); color: var(--gold); }
+  .top-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .btn-top { display: inline-flex; align-items: center; gap: 8px; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; border: 1px solid rgba(201,168,76,0.15); padding: 8px 16px; transition: all 0.2s; }
+  .btn-top:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-top-gold { border-color: rgba(201,168,76,0.4); color: var(--gold); }
+  .btn-top-gold:hover { background: rgba(201,168,76,0.06); }
   .page-header { text-align: center; margin-bottom: 4rem; animation: fadeUp 1s ease both; }
   .eyebrow { font-size: 10px; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
   .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem,6vw,4.5rem); font-weight: 300; line-height: 1; margin-bottom: 0.5rem; }
@@ -45,41 +48,6 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
   @keyframes slideIn{from{opacity:0;transform:translateX(-10px);}to{opacity:1;transform:translateX(0);}}
 
-  /* Edit section anchor */
-  #actualizar { scroll-margin-top: 2rem; }
-  .update-section { margin-bottom: 3rem; animation: fadeUp 1s ease 0.1s both; }
-  .update-card { background: var(--dark-2); border: 1px solid var(--border); padding: 2.5rem; position: relative; }
-  .update-card::before,.update-card::after { content:''; position:absolute; width:16px; height:16px; border-color:var(--gold); border-style:solid; }
-  .update-card::before { top:-1px; left:-1px; border-width:2px 0 0 2px; }
-  .update-card::after  { bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
-  .update-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; margin-bottom: 0.3rem; }
-  .update-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.8rem; line-height: 1.7; }
-  .field { margin-bottom: 1.2rem; }
-  .field label { display: block; font-size: 10px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 500; }
-  .field input, .field select { width: 100%; background: var(--dark-4); border: 1px solid var(--border); color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 14px; padding: 12px 14px; outline: none; transition: border-color 0.3s; }
-  .field input:focus, .field select:focus { border-color: var(--gold); }
-  .field input::placeholder { color: var(--text-muted); }
-  .field select option { background: var(--dark-4); color: var(--text); }
-  .update-step { display: none; }
-  .update-step.active { display: block; }
-  .update-found-banner { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.35); padding: 12px 16px; margin-bottom: 1.2rem; }
-  .update-found-title { font-size: 9px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 4px; }
-  .update-found-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--gold-light); }
-  .ticket-note { font-size: 10px; color: var(--text-muted); background: rgba(201,168,76,0.04); border-left: 2px solid var(--gold); padding: 10px 14px; margin-bottom: 1rem; line-height: 1.7; letter-spacing: 0.05em; }
-  .ticket-note strong { color: var(--gold-light); }
-  .btn-action { width: 100%; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.4em; text-transform: uppercase; padding: 14px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; margin-top: 0.5rem; }
-  .btn-action::before { content:''; position:absolute; inset:0; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform 0.4s ease; z-index:0; }
-  .btn-action:hover:not(:disabled)::before { transform:scaleX(1); }
-  .btn-action:hover:not(:disabled) { color: var(--dark); }
-  .btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-action span { position: relative; z-index: 1; }
-  .btn-secondary { width: 100%; background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; padding: 12px; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; }
-  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
-  .err { font-size: 11px; color: var(--red); margin-top: 0.4rem; display: none; }
-  .err.show { display: block; }
-  .suc { font-size: 11px; color: var(--gold); margin-top: 0.4rem; display: none; letter-spacing: 0.1em; }
-  .suc.show { display: block; }
-
   /* List */
   .attendees-list { animation: fadeUp 1s ease 0.2s both; }
   .attendee-row { display: flex; align-items: center; gap: 1.2rem; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); transition: background 0.2s; animation: slideIn 0.5s ease both; }
@@ -92,37 +60,8 @@
   .attendee-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; }
   .attendee-date { font-size: 10px; letter-spacing: 0.2em; color: var(--text-muted); margin-top: 2px; }
   .attendee-check { font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; opacity: 0.7; flex-shrink: 0; }
-  .row-actions { display: flex; gap: 8px; flex-shrink: 0; }
-  .btn-edit { background: transparent; border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; padding: 6px 12px; cursor: pointer; transition: all 0.2s; }
-  .btn-edit:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
-  .btn-delete { background: transparent; border: 1px solid rgba(226,114,91,0.3); color: var(--red); font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; padding: 6px 12px; cursor: pointer; transition: all 0.2s; }
-  .btn-delete:hover { border-color: var(--red); background: rgba(226,114,91,0.08); }
-
-  /* Modals */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100; display: none; align-items: center; justify-content: center; padding: 2rem; }
-  .modal-overlay.open { display: flex; }
-  .modal { background: var(--dark-2); border: 1px solid var(--border); padding: 2.5rem; max-width: 420px; width: 100%; position: relative; animation: fadeUp 0.3s ease both; }
-  .modal::before,.modal::after { content:''; position:absolute; width:16px; height:16px; border-color:var(--gold); border-style:solid; }
-  .modal::before { top:-1px; left:-1px; border-width:2px 0 0 2px; }
-  .modal::after  { bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
-  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; margin-bottom: 0.4rem; }
-  .modal-sub { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.8rem; line-height: 1.7; }
-  .modal-name { color: var(--gold-light); font-style: italic; }
-  .modal-field label { display: block; font-size: 10px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem; }
-  .modal-field input,.modal-field select { width: 100%; background: var(--dark-4); border: 1px solid var(--border); color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 14px; padding: 12px 14px; outline: none; transition: border-color 0.3s; margin-bottom: 1rem; }
-  .modal-field input:focus,.modal-field select:focus { border-color: var(--gold); }
-  .modal-field input::placeholder { color: var(--text-muted); }
-  .modal-field select option { background: var(--dark-4); color: var(--text); }
-  .modal-error { font-size: 11px; color: var(--red); margin-top: -0.6rem; margin-bottom: 0.8rem; display: none; }
-  .modal-error.show { display: block; }
-  .modal-actions { display: flex; gap: 12px; margin-top: 1.5rem; }
-  .btn-cancel-modal { flex: 1; background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; padding: 12px; cursor: pointer; transition: all 0.2s; }
-  .btn-cancel-modal:hover { border-color: var(--gold); color: var(--gold); }
-  .btn-confirm-delete { flex: 1; background: transparent; border: 1px solid rgba(226,114,91,0.5); color: var(--red); font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; padding: 12px; cursor: pointer; transition: all 0.2s; }
-  .btn-confirm-delete:hover:not(:disabled) { background: rgba(226,114,91,0.1); border-color: var(--red); }
-  .btn-confirm-delete:disabled,.btn-confirm-edit:disabled { opacity: 0.4; cursor: not-allowed; }
-  .btn-confirm-edit { flex: 1; background: transparent; border: 1px solid rgba(201,168,76,0.5); color: var(--gold); font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; padding: 12px; cursor: pointer; transition: all 0.2s; }
-  .btn-confirm-edit:hover:not(:disabled) { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+  .attendee-tickets { font-size: 10px; letter-spacing: 0.15em; color: var(--text-muted); flex-shrink: 0; }
+  .attendee-tickets strong { color: var(--gold-light); font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; }
 
   .empty-state { text-align: center; padding: 4rem 2rem; border: 1px dashed var(--border); }
   .empty-state p { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: var(--text-muted); margin-bottom: 1rem; }
@@ -133,52 +72,14 @@
   @keyframes blink{0%,100%{opacity:.2;}50%{opacity:1;}}
   footer { text-align: center; margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 10px; letter-spacing: 0.3em; color: var(--text-muted); }
   @media(max-width:500px){
-    .row-actions{flex-direction:column;gap:4px;}
     .top-bar{flex-direction:column;align-items:flex-start;}
+    .attendee-row { flex-wrap: wrap; gap: 8px; }
+    .attendee-check { display: none; }
   }
 </style>
 </head>
 <body>
 <div class="page-bg"></div>
-
-<!-- DELETE MODAL -->
-<div class="modal-overlay" id="modal-delete">
-  <div class="modal">
-    <h2 class="modal-title">Cancelar asistencia</h2>
-    <p class="modal-sub">Eliminarás el registro de<br><span class="modal-name" id="del-nombre"></span><br>Ingresa tu contraseña para confirmar.</p>
-    <div class="modal-field">
-      <label>Contraseña personal</label>
-      <input type="password" id="del-pass" placeholder="Tu contraseña">
-      <p class="modal-error" id="del-error">Contraseña incorrecta.</p>
-      <p class="modal-error" id="del-error-fb">Error de conexión. Intenta de nuevo.</p>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel-modal" onclick="closeModals()">Cancelar</button>
-      <button class="btn-confirm-delete" id="btn-del-confirm" onclick="confirmDelete()">Eliminar registro</button>
-    </div>
-  </div>
-</div>
-
-<!-- EDIT MODAL -->
-<div class="modal-overlay" id="modal-edit">
-  <div class="modal">
-    <h2 class="modal-title">Editar asistencia</h2>
-    <p class="modal-sub">Modificando el registro de<br><span class="modal-name" id="edit-nombre-display"></span><br>Ingresa tu contraseña y selecciona los nuevos lugares.</p>
-    <div class="modal-field">
-      <label>Contraseña personal</label>
-      <input type="password" id="edit-pass" placeholder="Tu contraseña">
-      <p class="modal-error" id="edit-error-pass">Contraseña incorrecta.</p>
-      <label style="margin-top:0.2rem;">Lugares a reservar (incluyéndote a ti)</label>
-      <select id="edit-boletos"><option value="">— Selecciona —</option></select>
-      <p class="modal-error" id="edit-error-sel">Por favor selecciona una cantidad.</p>
-      <p class="modal-error" id="edit-error-fb">Error de conexión. Intenta de nuevo.</p>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel-modal" onclick="closeModals()">Cancelar</button>
-      <button class="btn-confirm-edit" id="btn-edit-confirm" onclick="confirmEdit()">Guardar cambios</button>
-    </div>
-  </div>
-</div>
 
 <div class="wrapper">
   <div class="top-bar">
@@ -186,82 +87,40 @@
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
       Volver al evento
     </a>
-    <a href="admin.html" class="btn-admin">
-      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      Panel de administración
-    </a>
-  </div>
-
-  <!-- ACTUALIZAR REGISTRO (ancla desde index) -->
-  <div id="actualizar" class="update-section">
-    <div class="update-card">
-      <h2 class="update-title">Actualizar<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-light);">mi registro</em></h2>
-      <p class="update-sub">Busca tu nombre para modificar la cantidad de lugares reservados.</p>
-
-      <!-- Paso 1: buscar -->
-      <div class="update-step active" id="upd-step1">
-        <div class="field">
-          <label>Nombre completo</label>
-          <input type="text" id="upd-nombre" placeholder="Tu nombre completo" autocomplete="off">
-          <p class="err" id="upd-err-nombre">Ingresa nombre y apellido.</p>
-          <p class="err" id="upd-err-nofound">No encontramos ese registro. ¿Ya confirmaste tu asistencia?</p>
-        </div>
-        <button class="btn-action" id="btn-upd-buscar" onclick="updBuscar()"><span>Buscar mi registro</span></button>
-      </div>
-
-      <!-- Paso 2: autenticar y editar -->
-      <div class="update-step" id="upd-step2">
-        <div class="update-found-banner">
-          <div class="update-found-title">✦ Registro encontrado</div>
-          <div class="update-found-name" id="upd-found-name">—</div>
-        </div>
-        <div class="ticket-note">
-          <strong>Selecciona cuántos lugares quieres usar.</strong><br>
-          No puedes superar el máximo de boletos que te fueron asignados. El conteo te incluye a ti.
-        </div>
-        <div class="field">
-          <label>Contraseña personal</label>
-          <input type="password" id="upd-pass" placeholder="Tu contraseña">
-          <p class="err" id="upd-err-pass">Contraseña incorrecta.</p>
-        </div>
-        <div class="field">
-          <label>Nuevos lugares a reservar</label>
-          <select id="upd-boletos"><option value="">— Selecciona —</option></select>
-          <p class="err" id="upd-err-sel">Por favor selecciona una cantidad.</p>
-        </div>
-        <p class="err" id="upd-err-fb">Error de conexión. Intenta de nuevo.</p>
-        <p class="suc" id="upd-ok">✦ ¡Registro actualizado! Recargando...</p>
-        <button class="btn-action" id="btn-upd-guardar" onclick="updGuardar()"><span>Guardar cambios</span></button>
-        <button class="btn-secondary" onclick="updReset()">← Buscar otro nombre</button>
-      </div>
+    <div class="top-actions">
+      <a href="editar.html" class="btn-top btn-top-gold">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2-7 7H4.5v-2l7-7z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Actualizar mi registro
+      </a>
+      <a href="admin.html" class="btn-top">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Administración
+      </a>
     </div>
   </div>
 
-  <!-- HEADER -->
   <div class="page-header">
-    <p class="eyebrow">Lista oficial</p>
-    <h1 class="page-title">Los que<br><em>asistirán</em></h1>
+    <p class="eyebrow">Confirmaciones</p>
+    <h1 class="page-title">Lista de<br><em>asistentes</em></h1>
     <div class="divider"><div class="divider-gem"></div></div>
     <div class="counter-area">
       <div class="count-badge highlight">
-        <strong id="total-seats">—</strong>&nbsp;espacios reservados de 150 disponibles
+        <strong id="total-count">—</strong> invitados confirmados
       </div>
       <div class="count-badge">
-        <strong id="total-count">—</strong>&nbsp;invitados principales confirmados
+        <strong id="total-seats">—</strong> espacios reservados
       </div>
       <div class="capacity-bar-wrap">
         <div class="capacity-bar-track">
           <div class="capacity-bar-fill" id="capacity-bar" style="width:0%"></div>
         </div>
-        <p class="capacity-label">Capacidad: <span id="capacity-pct">0%</span> de 150</p>
+        <p class="capacity-label"><span id="capacity-pct">0%</span> de capacidad ocupada</p>
       </div>
     </div>
   </div>
 
   <div class="attendees-list" id="list-container">
-    <div class="loading-state">Cargando lista
-      <span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span>
-    </div>
+    <div class="loading-state">Cargando lista<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span></div>
   </div>
 
   <footer>&copy; 2025 · The Grand Event · Lista de asistentes</footer>
@@ -269,7 +128,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, getDocs, deleteDoc, doc, updateDoc, query, orderBy, where }
+  import { getFirestore, collection, getDocs, query, orderBy }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const MAX_CAPACITY = 150;
@@ -296,152 +155,7 @@
   function escHtml(s){
     return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
-  async function hashPass(str){
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  }
 
-  // ── STATE ────────────────────────────────────────────
-  let pendingDocId=null, pendingHash=null, pendingNombre=null, pendingAsignados=null;
-  let updDocId=null, updHash=null, updAsignados=null;
-
-  // ── MODALS ───────────────────────────────────────────
-  window.closeModals = () => {
-    document.getElementById('modal-delete').classList.remove('open');
-    document.getElementById('modal-edit').classList.remove('open');
-    pendingDocId=pendingHash=pendingNombre=pendingAsignados=null;
-  };
-
-  document.getElementById('modal-delete').addEventListener('click',e=>{if(e.target===document.getElementById('modal-delete'))closeModals();});
-  document.getElementById('modal-edit').addEventListener('click',e=>{if(e.target===document.getElementById('modal-edit'))closeModals();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModals();});
-
-  // DELETE modal
-  window.openDeleteModal = (docId, hash, nombre) => {
-    pendingDocId=docId; pendingHash=hash; pendingNombre=nombre;
-    document.getElementById('del-nombre').textContent=nombre;
-    document.getElementById('del-pass').value='';
-    document.getElementById('del-error').classList.remove('show');
-    document.getElementById('del-error-fb').classList.remove('show');
-    document.getElementById('modal-delete').classList.add('open');
-    setTimeout(()=>document.getElementById('del-pass').focus(),100);
-  };
-  window.confirmDelete = async () => {
-    const pass=document.getElementById('del-pass').value;
-    const btn=document.getElementById('btn-del-confirm');
-    document.getElementById('del-error').classList.remove('show');
-    document.getElementById('del-error-fb').classList.remove('show');
-    if(!pass){document.getElementById('del-error').classList.add('show');return;}
-    btn.disabled=true; btn.textContent='Verificando...';
-    try {
-      const h=await hashPass(pass);
-      if(h!==pendingHash){document.getElementById('del-error').classList.add('show');btn.disabled=false;btn.textContent='Eliminar registro';return;}
-      await deleteDoc(doc(db,'asistentes',pendingDocId));
-      closeModals(); loadAsistentes();
-    } catch(e){console.error(e);document.getElementById('del-error-fb').classList.add('show');btn.disabled=false;btn.textContent='Eliminar registro';}
-  };
-
-  // EDIT modal (from list buttons)
-  window.openEditModal = (docId, hash, nombre, asignados, usados) => {
-    pendingDocId=docId; pendingHash=hash; pendingNombre=nombre; pendingAsignados=asignados;
-    document.getElementById('edit-nombre-display').textContent=nombre;
-    document.getElementById('edit-pass').value='';
-    document.getElementById('edit-error-pass').classList.remove('show');
-    document.getElementById('edit-error-sel').classList.remove('show');
-    document.getElementById('edit-error-fb').classList.remove('show');
-    const sel=document.getElementById('edit-boletos');
-    sel.innerHTML='<option value="">— Selecciona —</option>';
-    for(let i=1;i<=asignados;i++){
-      const opt=document.createElement('option');
-      opt.value=i;
-      opt.textContent=i===1?'1 lugar (solo yo)':`${i} lugares (yo + ${i-1} acompañante${i-1>1?'s':''})`;
-      if(i===usados) opt.selected=true;
-      sel.appendChild(opt);
-    }
-    document.getElementById('modal-edit').classList.add('open');
-    setTimeout(()=>document.getElementById('edit-pass').focus(),100);
-  };
-  window.confirmEdit = async () => {
-    const pass=document.getElementById('edit-pass').value;
-    const nuevos=parseInt(document.getElementById('edit-boletos').value);
-    const btn=document.getElementById('btn-edit-confirm');
-    ['edit-error-pass','edit-error-sel','edit-error-fb'].forEach(id=>document.getElementById(id).classList.remove('show'));
-    let ok=true;
-    if(!pass){document.getElementById('edit-error-pass').classList.add('show');ok=false;}
-    if(!nuevos||isNaN(nuevos)){document.getElementById('edit-error-sel').classList.add('show');ok=false;}
-    if(!ok) return;
-    btn.disabled=true; btn.textContent='Guardando...';
-    try {
-      const h=await hashPass(pass);
-      if(h!==pendingHash){document.getElementById('edit-error-pass').classList.add('show');btn.disabled=false;btn.textContent='Guardar cambios';return;}
-      await updateDoc(doc(db,'asistentes',pendingDocId),{boletos_usados:nuevos});
-      closeModals(); loadAsistentes();
-    } catch(e){console.error(e);document.getElementById('edit-error-fb').classList.add('show');btn.disabled=false;btn.textContent='Guardar cambios';}
-  };
-
-  // ── ACTUALIZAR (inline section) ─────────────────────
-  window.updBuscar = async () => {
-    const nombre=document.getElementById('upd-nombre').value.trim();
-    const btn=document.getElementById('btn-upd-buscar');
-    ['upd-err-nombre','upd-err-nofound'].forEach(id=>document.getElementById(id).classList.remove('show'));
-    if(nombre.split(' ').filter(Boolean).length<2){document.getElementById('upd-err-nombre').classList.add('show');return;}
-    btn.disabled=true; btn.querySelector('span').textContent='Buscando...';
-    try {
-      const snap=await getDocs(query(collection(db,'asistentes'),where('nombre_lower','==',nombre.toLowerCase())));
-      if(snap.empty){document.getElementById('upd-err-nofound').classList.add('show');btn.disabled=false;btn.querySelector('span').textContent='Buscar mi registro';return;}
-      const data=snap.docs[0];
-      updDocId=data.id;
-      updHash=data.data().password_hash;
-      updAsignados=data.data().boletos_asignados||1;
-      const usados=data.data().boletos_usados||1;
-      document.getElementById('upd-found-name').textContent=data.data().nombre;
-      const sel=document.getElementById('upd-boletos');
-      sel.innerHTML='<option value="">— Selecciona —</option>';
-      for(let i=1;i<=updAsignados;i++){
-        const opt=document.createElement('option');
-        opt.value=i;
-        opt.textContent=i===1?'1 lugar (solo yo)':`${i} lugares (yo + ${i-1} acompañante${i-1>1?'s':''})`;
-        if(i===usados) opt.selected=true;
-        sel.appendChild(opt);
-      }
-      document.getElementById('upd-step1').classList.remove('active');
-      document.getElementById('upd-step2').classList.add('active');
-    } catch(e){console.error(e);alert('Error de conexión.');btn.disabled=false;btn.querySelector('span').textContent='Buscar mi registro';}
-  };
-
-  window.updGuardar = async () => {
-    const pass=document.getElementById('upd-pass').value;
-    const nuevos=parseInt(document.getElementById('upd-boletos').value);
-    const btn=document.getElementById('btn-upd-guardar');
-    ['upd-err-pass','upd-err-sel','upd-err-fb','upd-ok'].forEach(id=>{
-      document.getElementById(id).classList.remove('show');
-    });
-    let ok=true;
-    if(!pass){document.getElementById('upd-err-pass').textContent='Ingresa tu contraseña.';document.getElementById('upd-err-pass').classList.add('show');ok=false;}
-    if(!nuevos||isNaN(nuevos)){document.getElementById('upd-err-sel').classList.add('show');ok=false;}
-    if(!ok) return;
-    btn.disabled=true; btn.querySelector('span').textContent='Guardando...';
-    try {
-      const h=await hashPass(pass);
-      if(h!==updHash){document.getElementById('upd-err-pass').textContent='Contraseña incorrecta.';document.getElementById('upd-err-pass').classList.add('show');btn.disabled=false;btn.querySelector('span').textContent='Guardar cambios';return;}
-      await updateDoc(doc(db,'asistentes',updDocId),{boletos_usados:nuevos});
-      document.getElementById('upd-ok').classList.add('show');
-      setTimeout(()=>{updReset();loadAsistentes();},1500);
-    } catch(e){console.error(e);document.getElementById('upd-err-fb').classList.add('show');btn.disabled=false;btn.querySelector('span').textContent='Guardar cambios';}
-  };
-
-  window.updReset = () => {
-    updDocId=updHash=updAsignados=null;
-    document.getElementById('upd-nombre').value='';
-    document.getElementById('upd-pass').value='';
-    ['upd-err-nombre','upd-err-nofound','upd-err-pass','upd-err-sel','upd-err-fb','upd-ok'].forEach(id=>document.getElementById(id).classList.remove('show'));
-    const btn=document.getElementById('btn-upd-buscar');
-    btn.disabled=false; btn.querySelector('span').textContent='Buscar mi registro';
-    document.getElementById('upd-step2').classList.remove('active');
-    document.getElementById('upd-step1').classList.add('active');
-  };
-
-  // ── LOAD LIST ────────────────────────────────────────
   async function loadAsistentes(){
     const container=document.getElementById('list-container');
     container.innerHTML=`<div class="loading-state">Cargando lista<span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span></div>`;
@@ -465,7 +179,6 @@
       container.innerHTML='';
       lista.forEach((a,i)=>{
         const boletos=parseInt(a.boletos_usados)||1;
-        const asignados=parseInt(a.boletos_asignados)||boletos;
         const row=document.createElement('div');
         row.className='attendee-row';
         row.style.animationDelay=(i*0.06)+'s';
@@ -476,11 +189,8 @@
             <div class="attendee-name">${escHtml(a.nombre)}</div>
             <div class="attendee-date">Registrado el ${escHtml(a.fecha||'—')}</div>
           </div>
-          <div class="attendee-check">✦ Confirmado</div>
-          <div class="row-actions">
-            <button class="btn-edit" onclick="openEditModal('${escHtml(a.id)}','${escHtml(a.password_hash||'')}','${escHtml(a.nombre)}',${asignados},${boletos})">Editar</button>
-            <button class="btn-delete" onclick="openDeleteModal('${escHtml(a.id)}','${escHtml(a.password_hash||'')}','${escHtml(a.nombre)}')">Cancelar</button>
-          </div>`;
+          <div class="attendee-tickets"><strong>${boletos}</strong> lugar${boletos!==1?'es':''}</div>
+          <div class="attendee-check">✦ Confirmado</div>`;
         container.appendChild(row);
       });
     } catch(e){
@@ -490,13 +200,6 @@
   }
 
   loadAsistentes();
-
-  // Si viene desde index con #actualizar, hacer scroll suave
-  if(window.location.hash==='#actualizar'){
-    setTimeout(()=>{
-      document.getElementById('actualizar').scrollIntoView({behavior:'smooth'});
-    },400);
-  }
 </script>
 </body>
 </html>

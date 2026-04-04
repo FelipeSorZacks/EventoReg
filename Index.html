@@ -100,7 +100,6 @@
   .success-msg.show{display:block;}
   .extra-fields{display:none;}
   .extra-fields.show{display:block;}
-  /* Nav buttons */
   .nav-section{position:relative;z-index:1;text-align:center;padding:1rem 2rem 5rem;display:flex;flex-direction:column;align-items:center;gap:14px;}
   .btn-nav{display:inline-flex;align-items:center;gap:12px;background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'Montserrat',sans-serif;font-size:10px;font-weight:500;letter-spacing:0.4em;text-transform:uppercase;padding:16px 36px;text-decoration:none;transition:all 0.3s;width:auto;}
   .btn-nav:hover{border-color:var(--gold);color:var(--gold);}
@@ -249,7 +248,7 @@
       <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
     </svg>
   </a>
-  <a href="asistentes.html#actualizar" class="btn-nav">
+  <a href="editar.html" class="btn-nav">
     Actualizar mi registro
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <path d="M11.5 2.5l2 2-7 7H4.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -265,13 +264,6 @@
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const EVENT_DATE = new Date('2025-12-31T20:00:00');
-
-  const INVITED_GUESTS = {
-    'virginia zacarias': 5,
-    'rebeca zacarias':   4,
-    'victor zacarias':   3,
-    'luis zacarias':     7,
-  };
 
   const firebaseConfig = {
     apiKey: "AIzaSyCC_NG5KUl1lR75BJPc27Svc_G75bcplhM",
@@ -335,29 +327,53 @@
     btn.disabled=false; btn.textContent='Verificar invitación';
   };
 
+  // ── BUSCAR en Firestore (colección 'invitados') ──────
   window.buscarInvitado = async () => {
-    const nombre=document.getElementById('nombre').value.trim();
-    const btn=document.getElementById('btn-buscar');
+    const nombre = document.getElementById('nombre').value.trim();
+    const btn = document.getElementById('btn-buscar');
     ['err-nombre','err-no-invitado','err-duplicado'].forEach(id=>document.getElementById(id).classList.remove('show'));
-    if(nombre.split(' ').filter(Boolean).length<2){document.getElementById('err-nombre').classList.add('show');return;}
+    if(nombre.split(' ').filter(Boolean).length < 2){
+      document.getElementById('err-nombre').classList.add('show'); return;
+    }
     btn.disabled=true; btn.textContent='Verificando...';
     try {
-      const nombreLower=nombre.toLowerCase();
-      const boletos=INVITED_GUESTS[nombreLower];
-      if(boletos===undefined){document.getElementById('err-no-invitado').classList.add('show');btn.disabled=false;btn.textContent='Verificar invitación';return;}
-      const snap=await getDocs(query(collection(db,'asistentes'),where('nombre_lower','==',nombreLower)));
-      if(!snap.empty){document.getElementById('err-duplicado').classList.add('show');btn.disabled=false;btn.textContent='Verificar invitación';return;}
+      const nombreLower = nombre.toLowerCase();
+
+      // 1. Verificar en lista de invitados en Firestore
+      const invSnap = await getDocs(query(collection(db,'invitados'), where('nombre_lower','==',nombreLower)));
+      if(invSnap.empty){
+        document.getElementById('err-no-invitado').classList.add('show');
+        btn.disabled=false; btn.textContent='Verificar invitación'; return;
+      }
+      const boletos = invSnap.docs[0].data().boletos || 1;
+
+      // 2. Verificar que no haya registrado ya
+      const asistSnap = await getDocs(query(collection(db,'asistentes'), where('nombre_lower','==',nombreLower)));
+      if(!asistSnap.empty){
+        document.getElementById('err-duplicado').classList.add('show');
+        btn.disabled=false; btn.textContent='Verificar invitación'; return;
+      }
+
       foundBoletos=boletos; lookupDone=true;
       document.getElementById('ticket-num').textContent=boletos;
       document.getElementById('ticket-sub').textContent=boletos===1?'boleto asignado para ti':'boletos asignados para ti';
       document.getElementById('ticket-banner').classList.add('show');
       const sel=document.getElementById('boletos-usar');
       sel.innerHTML='<option value="">— Selecciona —</option>';
-      for(let i=1;i<=boletos;i++){const opt=document.createElement('option');opt.value=i;opt.textContent=i===1?'1 lugar (solo yo)':`${i} lugares (yo + ${i-1} acompañante${i-1>1?'s':''})`;sel.appendChild(opt);}
+      for(let i=1;i<=boletos;i++){
+        const opt=document.createElement('option');
+        opt.value=i;
+        opt.textContent=i===1?'1 lugar (solo yo)':`${i} lugares (yo + ${i-1} acompañante${i-1>1?'s':''})`;
+        sel.appendChild(opt);
+      }
       document.getElementById('ticket-selector').classList.add('show');
       document.getElementById('extra-fields').classList.add('show');
       btn.textContent='✦ Invitado verificado';
-    } catch(e){console.error(e);alert('Error de conexión. Intenta de nuevo.');btn.disabled=false;btn.textContent='Verificar invitación';}
+    } catch(e){
+      console.error(e);
+      alert('Error de conexión. Intenta de nuevo.');
+      btn.disabled=false; btn.textContent='Verificar invitación';
+    }
   };
 
   window.handleSubmit = async () => {
@@ -377,11 +393,22 @@
     btn.disabled=true; btnTxt.textContent='Guardando...';
     try {
       const hash=await hashPass(pass);
-      await addDoc(collection(db,'asistentes'),{nombre,nombre_lower:nombre.toLowerCase(),password_hash:hash,boletos_asignados:foundBoletos,boletos_usados:boletos,fecha:new Date().toLocaleDateString('es-MX'),timestamp:Date.now()});
+      await addDoc(collection(db,'asistentes'),{
+        nombre, nombre_lower:nombre.toLowerCase(),
+        password_hash:hash,
+        boletos_asignados:foundBoletos,
+        boletos_usados:boletos,
+        fecha:new Date().toLocaleDateString('es-MX'),
+        timestamp:Date.now()
+      });
       document.getElementById('msg-ok').classList.add('show');
       btnTxt.textContent='¡Listo!';
-      setTimeout(()=>{window.location.href='asistentes.html';},1400);
-    } catch(e){console.error(e);document.getElementById('err-firebase').classList.add('show');btn.disabled=false;btnTxt.textContent='Confirmar asistencia';}
+      setTimeout(()=>{ window.location.href='asistentes.html'; },1400);
+    } catch(e){
+      console.error(e);
+      document.getElementById('err-firebase').classList.add('show');
+      btn.disabled=false; btnTxt.textContent='Confirmar asistencia';
+    }
   };
 </script>
 </body>

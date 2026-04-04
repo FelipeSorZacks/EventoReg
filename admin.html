@@ -69,31 +69,22 @@
   /* TABLES */
   .data-table { width:100%; border-collapse:collapse; margin-bottom:3rem; }
   .data-table th { font-size:9px; letter-spacing:0.35em; color:var(--gold); text-transform:uppercase; text-align:left; padding:10px 14px; border-bottom:1px solid var(--border); font-weight:500; }
-  .data-table td { padding:14px; border-bottom:1px solid rgba(201,168,76,0.08); font-size:12px; vertical-align:middle; }
+  .data-table td { padding:12px 14px; border-bottom:1px solid rgba(201,168,76,0.08); font-size:12px; vertical-align:middle; }
   .data-table tr:hover td { background:var(--gold-dim); }
   .td-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; }
   .td-muted { color:var(--text-muted); font-size:11px; }
-  .badge { display:inline-block; padding:3px 10px; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; border:1px solid; }
-  .badge-ok { border-color:rgba(111,207,151,0.4); color:var(--green); }
   .ticket-display { display:flex; align-items:center; gap:8px; }
   .ticket-used { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--gold-light); }
   .ticket-sep { color:var(--text-muted); font-size:11px; }
   .ticket-total { color:var(--text-muted); font-size:11px; }
 
-  /* Inline edit tickets */
-  .inline-edit { display:flex; align-items:center; gap:6px; }
-  .inline-num { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--gold-light); min-width:2ch; text-align:center; }
-  .btn-inc,.btn-dec { width:24px; height:24px; background:transparent; border:1px solid var(--border); color:var(--gold); font-size:14px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; flex-shrink:0; line-height:1; }
-  .btn-inc:hover,.btn-dec:hover { border-color:var(--gold); background:var(--gold-dim); }
-  .btn-inc:disabled,.btn-dec:disabled { opacity:0.25; cursor:not-allowed; }
-  .btn-save-tickets { font-size:9px; letter-spacing:0.25em; color:var(--gold); text-transform:uppercase; background:transparent; border:1px solid rgba(201,168,76,0.3); padding:4px 10px; cursor:pointer; transition:all 0.2s; display:none; }
-  .btn-save-tickets.show { display:inline-block; }
-  .btn-save-tickets:hover { border-color:var(--gold); background:var(--gold-dim); }
-
-  /* Action buttons in table */
+  /* Action buttons */
   .btn-tbl { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; background:transparent; padding:5px 10px; cursor:pointer; transition:all 0.2s; border:1px solid; }
   .btn-tbl-red { border-color:rgba(226,114,91,0.3); color:var(--red); }
   .btn-tbl-red:hover { border-color:var(--red); background:rgba(226,114,91,0.08); }
+  .btn-tbl-gold { border-color:rgba(201,168,76,0.3); color:var(--gold); }
+  .btn-tbl-gold:hover { border-color:var(--gold); background:rgba(201,168,76,0.08); }
+  .td-actions { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
 
   /* Add guest panel */
   .add-panel { background:var(--dark-2); border:1px solid var(--border); padding:2rem; margin-bottom:3rem; }
@@ -111,19 +102,29 @@
   .add-ok { font-size:11px; color:var(--gold); margin-top:0.6rem; display:none; }
   .add-ok.show { display:block; }
 
-  /* Delete confirm modal */
+  /* ── EDIT GUEST MODAL ───────────────────────────── */
   .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:150; display:none; align-items:center; justify-content:center; padding:2rem; }
   .modal-overlay.open { display:flex; }
-  .modal { background:var(--dark-2); border:1px solid var(--border); padding:2.5rem; max-width:400px; width:100%; position:relative; }
+  .modal { background:var(--dark-2); border:1px solid var(--border); padding:2.5rem; max-width:420px; width:100%; position:relative; }
   .modal::before,.modal::after { content:''; position:absolute; width:14px; height:14px; border-color:var(--gold); border-style:solid; }
   .modal::before { top:-1px; left:-1px; border-width:2px 0 0 2px; }
   .modal::after  { bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
   .modal-title { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:300; margin-bottom:0.4rem; }
   .modal-sub { font-size:11px; color:var(--text-muted); letter-spacing:0.1em; margin-bottom:1.5rem; line-height:1.7; }
   .modal-name { color:var(--gold-light); font-style:italic; }
-  .modal-actions { display:flex; gap:12px; }
+  .modal-field { margin-bottom:1rem; }
+  .modal-field label { display:block; font-size:10px; letter-spacing:0.3em; color:var(--gold); text-transform:uppercase; margin-bottom:0.4rem; }
+  .modal-field input { width:100%; background:var(--dark-4); border:1px solid var(--border); color:var(--text); font-family:'Montserrat',sans-serif; font-size:14px; padding:11px 13px; outline:none; transition:border-color 0.3s; }
+  .modal-field input:focus { border-color:var(--gold); }
+  .modal-field input::placeholder { color:var(--text-muted); }
+  .modal-err { font-size:11px; color:var(--red); margin-top:0.3rem; display:none; }
+  .modal-err.show { display:block; }
+  .modal-actions { display:flex; gap:12px; margin-top:1.5rem; }
   .btn-modal-cancel { flex:1; background:transparent; border:1px solid var(--border); color:var(--text-muted); font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; padding:12px; cursor:pointer; transition:all 0.2s; }
   .btn-modal-cancel:hover { border-color:var(--gold); color:var(--gold); }
+  .btn-modal-save { flex:1; background:transparent; border:1px solid rgba(201,168,76,0.5); color:var(--gold); font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; padding:12px; cursor:pointer; transition:all 0.2s; }
+  .btn-modal-save:hover:not(:disabled) { background:rgba(201,168,76,0.08); border-color:var(--gold); }
+  .btn-modal-save:disabled { opacity:0.4; cursor:not-allowed; }
   .btn-modal-del { flex:1; background:transparent; border:1px solid rgba(226,114,91,0.5); color:var(--red); font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:0.3em; text-transform:uppercase; padding:12px; cursor:pointer; transition:all 0.2s; }
   .btn-modal-del:hover:not(:disabled) { background:rgba(226,114,91,0.1); }
   .btn-modal-del:disabled { opacity:0.4; cursor:not-allowed; }
@@ -156,7 +157,30 @@
   </div>
 </div>
 
-<!-- DELETE MODAL -->
+<!-- MODAL: EDITAR INVITADO PRE-AUTORIZADO -->
+<div class="modal-overlay" id="modal-edit-guest">
+  <div class="modal">
+    <h2 class="modal-title">Editar invitado</h2>
+    <p class="modal-sub">Modifica el nombre o los boletos asignados de<br><span class="modal-name" id="meg-nombre-display">—</span></p>
+    <div class="modal-field">
+      <label>Nombre completo</label>
+      <input type="text" id="meg-nombre" placeholder="Nombre Apellido">
+      <p class="modal-err" id="meg-err-nombre">Ingresa nombre y apellido.</p>
+    </div>
+    <div class="modal-field">
+      <label>Boletos asignados</label>
+      <input type="number" id="meg-boletos" placeholder="Ej: 3" min="1" max="20">
+      <p class="modal-err" id="meg-err-boletos">Ingresa un número válido (mín. 1).</p>
+    </div>
+    <p class="modal-err" id="meg-err-fb">Error de conexión.</p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeEditGuestModal()">Cancelar</button>
+      <button class="btn-modal-save" id="btn-meg-save" onclick="saveEditGuest()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ELIMINAR -->
 <div class="modal-overlay" id="modal-del">
   <div class="modal">
     <h2 class="modal-title">Eliminar invitado</h2>
@@ -207,13 +231,13 @@
     </div>
   </div>
 
-  <!-- REGISTROS -->
+  <!-- REGISTROS CONFIRMADOS -->
   <div class="section-header">
     <h2 class="section-title">Registros <em>confirmados</em></h2>
   </div>
   <div class="divider-thin"></div>
   <div id="registros-container">
-    <div class="loading-state">Cargando<span>...</span></div>
+    <div class="loading-state">Cargando...</div>
   </div>
 
   <!-- LISTA DE INVITADOS PRE-AUTORIZADOS -->
@@ -237,11 +261,11 @@
       <button class="btn-add" onclick="addGuest()">+ Agregar</button>
     </div>
     <p class="add-err" id="add-err">Ingresa nombre completo y número de boletos (mín. 1).</p>
-    <p class="add-ok" id="add-ok">✦ Invitado agregado. Recargando lista...</p>
+    <p class="add-ok" id="add-ok">✦ Invitado agregado.</p>
   </div>
 
   <div id="guests-container">
-    <div class="loading-state">Cargando<span>...</span></div>
+    <div class="loading-state">Cargando...</div>
   </div>
 
   <footer>&copy; 2025 · The Grand Event · Panel de Administración</footer>
@@ -252,10 +276,7 @@
   import { getFirestore, collection, getDocs, deleteDoc, doc, updateDoc, addDoc, query, orderBy, where }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // ── ADMIN PASSWORD (cámbiala aquí) ──────────────────
   const ADMIN_PASSWORD = 'admin2025';
-  // ────────────────────────────────────────────────────
-
   const MAX_CAP = 150;
 
   const firebaseConfig = {
@@ -280,16 +301,14 @@
     document.getElementById('login-error').classList.remove('show');
     if(pass === ADMIN_PASSWORD){
       sessionStorage.setItem('admin_auth','1');
-      isAuth=true;
-      showApp();
+      isAuth=true; showApp();
     } else {
       document.getElementById('login-error').classList.add('show');
     }
   };
 
   window.doLogout = () => {
-    sessionStorage.removeItem('admin_auth');
-    isAuth=false;
+    sessionStorage.removeItem('admin_auth'); isAuth=false;
     document.getElementById('main-wrapper').style.display='none';
     document.getElementById('login-screen').classList.remove('hidden');
     document.getElementById('admin-pass').value='';
@@ -301,20 +320,21 @@
     loadAll();
   }
 
-  // ── LOAD ALL ─────────────────────────────────────────
   async function loadAll(){
     await Promise.all([loadRegistros(), loadGuests()]);
   }
 
-  // ── REGISTROS ────────────────────────────────────────
-  let registros = [];
+  function escHtml(s){
+    return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
 
+  // ── REGISTROS CONFIRMADOS ─────────────────────────────
   async function loadRegistros(){
     const container = document.getElementById('registros-container');
     container.innerHTML='<div class="loading-state">Cargando...</div>';
     try {
       const snap = await getDocs(query(collection(db,'asistentes'),orderBy('timestamp','asc')));
-      registros=[];
+      const registros=[];
       snap.forEach(d=>registros.push({id:d.id,...d.data()}));
 
       const totalSeats = registros.reduce((s,a)=>s+(parseInt(a.boletos_usados)||1),0);
@@ -322,36 +342,28 @@
       document.getElementById('stat-regs').textContent = registros.length;
       document.getElementById('stat-seats').textContent = totalSeats;
       document.getElementById('stat-free').textContent = free;
-      const pct = Math.min(Math.round((totalSeats/MAX_CAP)*100),100);
-      document.getElementById('stat-bar').style.width = pct+'%';
+      document.getElementById('stat-bar').style.width = Math.min(Math.round((totalSeats/MAX_CAP)*100),100)+'%';
 
       if(registros.length===0){
         container.innerHTML='<table class="data-table"><thead><tr><th>#</th><th>Nombre</th><th>Fecha</th><th>Boletos usados / asignados</th><th>Acciones</th></tr></thead><tbody><tr class="empty-row"><td colspan="5">Sin confirmaciones aún.</td></tr></tbody></table>';
         return;
       }
-
-      let html=`<table class="data-table">
-        <thead><tr>
-          <th>#</th><th>Nombre</th><th>Registrado</th><th>Boletos usados / asignados</th><th>Acciones</th>
-        </tr></thead><tbody>`;
-
+      let html=`<table class="data-table"><thead><tr><th>#</th><th>Nombre</th><th>Registrado</th><th>Boletos usados / asignados</th><th>Acciones</th></tr></thead><tbody>`;
       registros.forEach((a,i)=>{
-        const usado = parseInt(a.boletos_usados)||1;
-        const asignado = parseInt(a.boletos_asignados)||usado;
+        const usado=parseInt(a.boletos_usados)||1;
+        const asignado=parseInt(a.boletos_asignados)||usado;
         html+=`<tr>
           <td class="td-muted">${String(i+1).padStart(2,'0')}</td>
           <td class="td-name">${escHtml(a.nombre)}</td>
           <td class="td-muted">${escHtml(a.fecha||'—')}</td>
-          <td>
-            <div class="ticket-display">
-              <span class="ticket-used">${usado}</span>
-              <span class="ticket-sep">usado de</span>
-              <span class="ticket-total">${asignado} asignados</span>
-            </div>
-          </td>
-          <td>
-            <button class="btn-tbl btn-tbl-red" onclick="openDelModal('${escHtml(a.id)}','${escHtml(a.nombre)}')">Eliminar</button>
-          </td>
+          <td><div class="ticket-display">
+            <span class="ticket-used">${usado}</span>
+            <span class="ticket-sep">usado de</span>
+            <span class="ticket-total">${asignado} asignados</span>
+          </div></td>
+          <td><div class="td-actions">
+            <button class="btn-tbl btn-tbl-red" onclick="openDelModal('${escHtml(a.id)}','${escHtml(a.nombre)}','asistentes')">Eliminar</button>
+          </div></td>
         </tr>`;
       });
       html+='</tbody></table>';
@@ -362,120 +374,41 @@
     }
   }
 
-  // ── GUESTS (pre-autorizados) ─────────────────────────
-async function loadGuests(){
-  const container = document.getElementById('guests-container');
-  container.innerHTML = '<div class="loading-state">Cargando...</div>';
+  // ── INVITADOS PRE-AUTORIZADOS ─────────────────────────
+  async function loadGuests(){
+    const container = document.getElementById('guests-container');
+    container.innerHTML='<div class="loading-state">Cargando...</div>';
+    try {
+      const snap = await getDocs(query(collection(db,'invitados'), orderBy('nombre','asc')));
+      const guests=[];
+      snap.forEach(d=>guests.push({id:d.id,...d.data()}));
+      document.getElementById('stat-guests').textContent = guests.length;
 
-  try {
-    const snap = await getDocs(query(collection(db,'invitados'), orderBy('nombre','asc')));
-    
-    let guests = [];
-    snap.forEach(d => guests.push({id: d.id, ...d.data()}));
-
-    document.getElementById('stat-guests').textContent = guests.length;
-
-    if(guests.length === 0){
-      container.innerHTML = `
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Boletos asignados</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="empty-row">
-              <td colspan="4">Sin invitados pre-autorizados.</td>
-            </tr>
-          </tbody>
-        </table>
-      `;
-      return;
-    }
-
-    let html = `
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Boletos asignados</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-    `;
-
-    guests.forEach((g, i) => {
-      html += `
-        <tr>
+      if(guests.length===0){
+        container.innerHTML=`<table class="data-table"><thead><tr><th>#</th><th>Nombre</th><th>Boletos asignados</th><th>Acciones</th></tr></thead><tbody><tr class="empty-row"><td colspan="4">Sin invitados pre-autorizados. Agrégalos arriba.</td></tr></tbody></table>`;
+        return;
+      }
+      let html=`<table class="data-table"><thead><tr><th>#</th><th>Nombre</th><th>Boletos asignados</th><th>Acciones</th></tr></thead><tbody>`;
+      guests.forEach((g,i)=>{
+        html+=`<tr>
           <td class="td-muted">${String(i+1).padStart(2,'0')}</td>
           <td class="td-name">${escHtml(g.nombre)}</td>
-          <td>${g.boletos || 1}</td>
-          <td>
-            <button class="btn-tbl btn-tbl-red" onclick="openDelGuest('${g.id}','${escHtml(g.nombre)}')">
-              Eliminar
-            </button>
-          </td>
-        </tr>
-      `;
-    });
-
-    html += '</tbody></table>';
-    container.innerHTML = html;
-
-  } catch(e){
-    console.error(e);
-    container.innerHTML = '<p style="color:var(--red);font-size:12px;">Error al cargar invitados.</p>';
-  }
-}
-
-  // ── TICKET ADJUSTMENT ────────────────────────────────
-  const pendingTickets = {}; // id -> nuevo valor
-
-  window.adjTickets = (id, nombre, nombreLower, delta) => {
-    const numEl = document.getElementById('inum-'+id);
-    const saveEl = document.getElementById('isave-'+id);
-    if(!numEl) return;
-    let cur = parseInt(numEl.textContent)||1;
-    cur = Math.max(1, cur+delta);
-    numEl.textContent = cur;
-    pendingTickets[id] = {val:cur, nombreLower};
-    saveEl.classList.add('show');
-    // Actualizar estado de botones
-    const ie = document.getElementById('ie-'+id);
-    const dec = ie.querySelector('.btn-dec');
-    dec.disabled = cur<=1;
-  };
-
-  window.saveTickets = async (id, nombreLower) => {
-    const saveEl = document.getElementById('isave-'+id);
-    const numEl  = document.getElementById('inum-'+id);
-    if(!pendingTickets[id]) return;
-    const nuevoBoletos = pendingTickets[id].val;
-    saveEl.textContent='...';
-    try {
-      await updateDoc(doc(db,'invited_guests',id),{boletos:nuevoBoletos});
-      // Si el invitado ya tiene registro, actualizar también boletos_asignados
-      const snap = await getDocs(query(collection(db,'asistentes'),where('nombre_lower','==',nombreLower)));
-      if(!snap.empty){
-        await updateDoc(doc(db,'asistentes',snap.docs[0].id),{boletos_asignados:nuevoBoletos});
-      }
-      saveEl.classList.remove('show');
-      saveEl.textContent='Guardar';
-      delete pendingTickets[id];
-      await loadAll();
+          <td><span style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold-light);">${g.boletos||1}</span><span style="font-size:10px;color:var(--text-muted);margin-left:4px;">boleto${(g.boletos||1)!==1?'s':''}</span></td>
+          <td><div class="td-actions">
+            <button class="btn-tbl btn-tbl-gold" onclick="openEditGuestModal('${escHtml(g.id)}','${escHtml(g.nombre)}',${g.boletos||1})">Editar</button>
+            <button class="btn-tbl btn-tbl-red" onclick="openDelModal('${escHtml(g.id)}','${escHtml(g.nombre)}','invitados')">Eliminar</button>
+          </div></td>
+        </tr>`;
+      });
+      html+='</tbody></table>';
+      container.innerHTML=html;
     } catch(e){
       console.error(e);
-      saveEl.textContent='Error';
-      setTimeout(()=>{saveEl.textContent='Guardar';},2000);
+      container.innerHTML='<p style="color:var(--red);font-size:12px;">Error al cargar invitados.</p>';
     }
-  };
+  }
 
-  // ── ADD GUEST ────────────────────────────────────────
+  // ── ADD GUEST ─────────────────────────────────────────
   window.addGuest = async () => {
     const nombre = document.getElementById('new-guest-name').value.trim();
     const tickets = parseInt(document.getElementById('new-guest-tickets').value);
@@ -484,13 +417,13 @@ async function loadGuests(){
       document.getElementById('add-err').classList.add('show'); return;
     }
     try {
-      await addDoc(collection(db,'invited_guests'),{
+      await addDoc(collection(db,'invitados'),{
         nombre, nombre_lower:nombre.toLowerCase(), boletos:tickets, creado:Date.now()
       });
       document.getElementById('new-guest-name').value='';
       document.getElementById('new-guest-tickets').value='';
       document.getElementById('add-ok').classList.add('show');
-      setTimeout(()=>{document.getElementById('add-ok').classList.remove('show');},2000);
+      setTimeout(()=>document.getElementById('add-ok').classList.remove('show'),2500);
       await loadGuests();
     } catch(e){
       console.error(e);
@@ -499,24 +432,67 @@ async function loadGuests(){
     }
   };
 
-  // ── DELETE MODAL ─────────────────────────────────────
+  // ── EDIT GUEST MODAL ──────────────────────────────────
+  let editGuestId=null;
+
+  window.openEditGuestModal = (id, nombre, boletos) => {
+    editGuestId=id;
+    document.getElementById('meg-nombre-display').textContent=nombre;
+    document.getElementById('meg-nombre').value=nombre;
+    document.getElementById('meg-boletos').value=boletos;
+    ['meg-err-nombre','meg-err-boletos','meg-err-fb'].forEach(id=>document.getElementById(id).classList.remove('show'));
+    document.getElementById('btn-meg-save').disabled=false;
+    document.getElementById('btn-meg-save').textContent='Guardar';
+    document.getElementById('modal-edit-guest').classList.add('open');
+    setTimeout(()=>document.getElementById('meg-nombre').focus(),100);
+  };
+
+  window.closeEditGuestModal = () => {
+    document.getElementById('modal-edit-guest').classList.remove('open');
+    editGuestId=null;
+  };
+
+  window.saveEditGuest = async () => {
+    const nombre = document.getElementById('meg-nombre').value.trim();
+    const boletos = parseInt(document.getElementById('meg-boletos').value);
+    const btn = document.getElementById('btn-meg-save');
+    ['meg-err-nombre','meg-err-boletos','meg-err-fb'].forEach(id=>document.getElementById(id).classList.remove('show'));
+    let ok=true;
+    if(nombre.split(' ').filter(Boolean).length<2){ document.getElementById('meg-err-nombre').classList.add('show'); ok=false; }
+    if(!boletos||boletos<1){ document.getElementById('meg-err-boletos').classList.add('show'); ok=false; }
+    if(!ok||!editGuestId) return;
+    btn.disabled=true; btn.textContent='Guardando...';
+    try {
+      await updateDoc(doc(db,'invitados',editGuestId),{
+        nombre, nombre_lower:nombre.toLowerCase(), boletos
+      });
+      // Si ya tiene registro de asistencia, actualizar boletos_asignados también
+      const snap = await getDocs(query(collection(db,'asistentes'), where('nombre_lower','==',nombre.toLowerCase())));
+      if(!snap.empty){
+        await updateDoc(doc(db,'asistentes',snap.docs[0].id),{boletos_asignados:boletos});
+      }
+      closeEditGuestModal();
+      await loadAll();
+    } catch(e){
+      console.error(e);
+      document.getElementById('meg-err-fb').classList.add('show');
+      btn.disabled=false; btn.textContent='Guardar';
+    }
+  };
+
+  // ── DELETE MODAL ──────────────────────────────────────
   let delDocId=null, delCollection=null;
 
-  window.openDelModal = (id, nombre) => {
-    delDocId=id; delCollection='asistentes';
+  window.openDelModal = (id, nombre, col) => {
+    delDocId=id; delCollection=col;
     document.getElementById('mdel-name').textContent=nombre;
-    document.getElementById('modal-del').classList.add('open');
-  };
-  window.openDelGuestModal = (id, nombre) => {
-    delDocId=id; delCollection='invited_guests';
-    document.getElementById('mdel-name').textContent=nombre;
+    document.getElementById('btn-mdel').disabled=false;
+    document.getElementById('btn-mdel').textContent='Eliminar';
     document.getElementById('modal-del').classList.add('open');
   };
   window.closeModal = () => {
     document.getElementById('modal-del').classList.remove('open');
     delDocId=null; delCollection=null;
-    document.getElementById('btn-mdel').disabled=false;
-    document.getElementById('btn-mdel').textContent='Eliminar';
   };
   window.doDeleteRegistro = async () => {
     if(!delDocId||!delCollection) return;
@@ -524,26 +500,16 @@ async function loadGuests(){
     btn.disabled=true; btn.textContent='Eliminando...';
     try {
       await deleteDoc(doc(db,delCollection,delDocId));
-      closeModal();
-      await loadAll();
+      closeModal(); await loadAll();
     } catch(e){
-      console.error(e);
-      btn.disabled=false; btn.textContent='Eliminar';
+      console.error(e); btn.disabled=false; btn.textContent='Eliminar';
     }
   };
 
+  // Close modals on backdrop click / Escape
   document.getElementById('modal-del').addEventListener('click',e=>{if(e.target===document.getElementById('modal-del'))closeModal();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
-
-  function escHtml(s){
-    return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-
-  // ── IMPORTANTE: Migrar lista de invitados a Firestore ─
-  // La primera vez que abras el admin, los invitados del JS
-  // deben estar en la colección 'invited_guests' de Firestore.
-  // Puedes crearlos manualmente desde el panel o usar el
-  // botón de "Agregar" de arriba.
+  document.getElementById('modal-edit-guest').addEventListener('click',e=>{if(e.target===document.getElementById('modal-edit-guest'))closeEditGuestModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeEditGuestModal();}});
 </script>
 </body>
 </html>
