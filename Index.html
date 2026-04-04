@@ -79,10 +79,24 @@
   .form-subtitle{font-size:11px;color:var(--text-muted);letter-spacing:0.12em;margin-bottom:2.5rem;line-height:1.8;}
   .field{margin-bottom:1.5rem;}
   .field label{display:block;font-size:10px;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;font-weight:500;}
-  .field input{width:100%;background:var(--dark-4);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:14px;font-weight:300;padding:14px 16px;outline:none;transition:border-color 0.3s,background 0.3s;}
-  .field input:focus{border-color:var(--gold);background:rgba(201,168,76,0.05);}
+  .field input, .field select{width:100%;background:var(--dark-4);border:1px solid var(--border);color:var(--text);font-family:'Montserrat',sans-serif;font-size:14px;font-weight:300;padding:14px 16px;outline:none;transition:border-color 0.3s,background 0.3s;}
+  .field input:focus, .field select:focus{border-color:var(--gold);background:rgba(201,168,76,0.05);}
   .field input::placeholder{color:var(--text-muted);}
+  .field select option{background:var(--dark-4);color:var(--text);}
   .field-hint{font-size:10px;color:var(--text-muted);margin-top:6px;letter-spacing:0.1em;line-height:1.6;}
+
+  /* Ticket info banner */
+  .ticket-banner{display:none;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.35);padding:14px 18px;margin-bottom:1.5rem;animation:fadeUp 0.4s ease both;}
+  .ticket-banner.show{display:block;}
+  .ticket-banner-title{font-size:9px;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+  .ticket-banner-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold-light);line-height:1;}
+  .ticket-banner-sub{font-size:10px;color:var(--text-muted);margin-top:4px;letter-spacing:0.1em;}
+
+  /* Ticket selector */
+  .ticket-selector{display:none;}
+  .ticket-selector.show{display:block;}
+  .ticket-note{font-size:10px;color:var(--text-muted);background:rgba(201,168,76,0.04);border-left:2px solid var(--gold);padding:10px 14px;margin-bottom:1rem;line-height:1.7;letter-spacing:0.05em;}
+  .ticket-note strong{color:var(--gold-light);}
 
   .btn-submit{width:100%;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.4em;text-transform:uppercase;padding:16px;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;margin-top:1rem;}
   .btn-submit::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;z-index:0;}
@@ -91,10 +105,19 @@
   .btn-submit:disabled{opacity:0.5;cursor:not-allowed;}
   .btn-submit span{position:relative;z-index:1;}
 
+  /* Lookup button */
+  .btn-buscar{width:100%;background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.4em;text-transform:uppercase;padding:14px;cursor:pointer;transition:all 0.3s;margin-top:0.4rem;}
+  .btn-buscar:hover:not(:disabled){border-color:var(--gold);color:var(--gold);}
+  .btn-buscar:disabled{opacity:0.4;cursor:not-allowed;}
+
   .error-msg{font-size:11px;color:#e2725b;margin-top:0.5rem;display:none;}
   .error-msg.show{display:block;}
   .success-msg{font-size:11px;color:var(--gold);margin-top:0.5rem;display:none;letter-spacing:0.1em;}
   .success-msg.show{display:block;}
+
+  /* Extra fields shown after lookup */
+  .extra-fields{display:none;}
+  .extra-fields.show{display:block;}
 
   /* Ver lista button */
   .ver-lista-section{position:relative;z-index:1;text-align:center;padding:1rem 2rem 5rem;}
@@ -190,34 +213,67 @@
 <div class="form-section">
   <div class="form-card">
     <h2 class="form-title">Confirma tu<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-light);">asistencia</em></h2>
-    <p class="form-subtitle">Regístrate para reservar tu lugar.<br>Guarda tu contraseña — la necesitarás si quieres cancelar tu asistencia.</p>
+    <p class="form-subtitle">Escribe tu nombre para verificar tu invitación.<br>Guarda tu contraseña — la necesitarás si quieres cancelar.</p>
 
+    <!-- PASO 1: Nombre + buscar -->
     <div class="field">
-      <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" placeholder="Tu nombre completo" autocomplete="off">
+      <label for="nombre">Nombre completo del invitado</label>
+      <input type="text" id="nombre" placeholder="Tu nombre completo" autocomplete="off"
+        oninput="resetLookup()">
       <p class="error-msg" id="err-nombre">Por favor ingresa tu nombre completo (nombre y apellido).</p>
+      <p class="error-msg" id="err-no-invitado">Este nombre no está en la lista de invitados. Verifica cómo está registrado.</p>
+      <p class="error-msg" id="err-duplicado">Este nombre ya confirmó su asistencia.</p>
     </div>
 
-    <div class="field">
-      <label for="password">Tu contraseña personal</label>
-      <input type="password" id="password" placeholder="Elige una contraseña">
-      <p class="field-hint">Guárdala bien — te la pedirán si quieres cancelar tu registro.</p>
-      <p class="error-msg" id="err-pass">La contraseña debe tener al menos 4 caracteres.</p>
-    </div>
-
-    <div class="field">
-      <label for="password2">Confirmar contraseña</label>
-      <input type="password" id="password2" placeholder="Repite tu contraseña">
-      <p class="error-msg" id="err-pass2">Las contraseñas no coinciden.</p>
-    </div>
-
-    <p class="error-msg" id="err-duplicado">Este nombre ya está registrado.</p>
-    <p class="error-msg" id="err-firebase">Error de conexión. Intenta de nuevo.</p>
-    <p class="success-msg" id="msg-ok">✦ ¡Registrado con éxito! Redirigiendo...</p>
-
-    <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
-      <span id="btn-text">Confirmar asistencia</span>
+    <button class="btn-buscar" id="btn-buscar" onclick="buscarInvitado()">
+      Verificar invitación
     </button>
+
+    <!-- Banner de boletos (aparece tras búsqueda exitosa) -->
+    <div class="ticket-banner" id="ticket-banner" style="margin-top:1.5rem;">
+      <div class="ticket-banner-title">✦ Invitación encontrada</div>
+      <div class="ticket-banner-num" id="ticket-num">—</div>
+      <div class="ticket-banner-sub" id="ticket-sub">boletos asignados para ti</div>
+    </div>
+
+    <!-- Selector de boletos a usar -->
+    <div class="ticket-selector" id="ticket-selector">
+      <div class="ticket-note">
+        <strong>¿Cuántos lugares deseas reservar?</strong><br>
+        El conteo te incluye a ti. Por ejemplo, si seleccionas 3, asistirás tú más 2 acompañantes. Puedes usar todos tus boletos o solo los que necesites.
+      </div>
+      <div class="field">
+        <label for="boletos-usar">Lugares a reservar (incluyéndote a ti)</label>
+        <select id="boletos-usar">
+          <option value="">— Selecciona —</option>
+        </select>
+        <p class="error-msg" id="err-boletos">Por favor selecciona cuántos lugares usarás.</p>
+      </div>
+    </div>
+
+    <!-- Campos extra: contraseña (aparecen tras búsqueda exitosa) -->
+    <div class="extra-fields" id="extra-fields">
+      <div class="field">
+        <label for="password">Tu contraseña personal</label>
+        <input type="password" id="password" placeholder="Elige una contraseña">
+        <p class="field-hint">Guárdala bien — te la pedirán si quieres cancelar tu registro.</p>
+        <p class="error-msg" id="err-pass">La contraseña debe tener al menos 4 caracteres.</p>
+      </div>
+
+      <div class="field">
+        <label for="password2">Confirmar contraseña</label>
+        <input type="password" id="password2" placeholder="Repite tu contraseña">
+        <p class="error-msg" id="err-pass2">Las contraseñas no coinciden.</p>
+      </div>
+
+      <p class="error-msg" id="err-firebase">Error de conexión. Intenta de nuevo.</p>
+      <p class="success-msg" id="msg-ok">✦ ¡Registrado con éxito! Redirigiendo...</p>
+
+      <button class="btn-submit" id="btn-enviar" onclick="handleSubmit()">
+        <span id="btn-text">Confirmar asistencia</span>
+      </button>
+    </div>
+
   </div>
 </div>
 
@@ -240,6 +296,16 @@
 
   // ── CAMBIA ESTA FECHA ────────────────────────────────
   const EVENT_DATE = new Date('2025-12-31T20:00:00');
+  // ────────────────────────────────────────────────────
+
+  // ── LISTA DE INVITADOS CON BOLETOS ───────────────────
+  // Agrega o quita invitados aquí (nombre en minúsculas)
+  const INVITED_GUESTS = {
+    'virginia zacarias': 5,
+    'rebeca zacarias':   4,
+    'victor zacarias':   3,
+    'luis zacarias':     7,
+  };
   // ────────────────────────────────────────────────────
 
   const firebaseConfig = {
@@ -295,26 +361,117 @@
     img.src=URL.createObjectURL(input.files[0]);
   };
 
-  // Simple hash para no guardar contraseña en texto plano
+  // Simple hash
   async function hashPass(str){
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
     return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   }
 
-  // Submit
-  window.handleSubmit = async () => {
-    const nombre = document.getElementById('nombre').value.trim();
-    const pass   = document.getElementById('password').value;
-    const pass2  = document.getElementById('password2').value;
-    const btn    = document.getElementById('btn-enviar');
-    const btnTxt = document.getElementById('btn-text');
+  // Estado del lookup
+  let foundBoletos = 0;
+  let lookupDone   = false;
 
-    ['err-nombre','err-pass','err-pass2','err-duplicado','err-firebase'].forEach(id=>
+  // Resetea cuando el usuario cambia el nombre
+  window.resetLookup = () => {
+    foundBoletos = 0;
+    lookupDone   = false;
+    document.getElementById('ticket-banner').classList.remove('show');
+    document.getElementById('ticket-selector').classList.remove('show');
+    document.getElementById('extra-fields').classList.remove('show');
+    ['err-nombre','err-no-invitado','err-duplicado'].forEach(id=>
+      document.getElementById(id).classList.remove('show'));
+  };
+
+  // Buscar invitado
+  window.buscarInvitado = async () => {
+    const nombre = document.getElementById('nombre').value.trim();
+    const btn    = document.getElementById('btn-buscar');
+
+    ['err-nombre','err-no-invitado','err-duplicado'].forEach(id=>
+      document.getElementById(id).classList.remove('show'));
+
+    if(nombre.split(' ').filter(Boolean).length < 2){
+      document.getElementById('err-nombre').classList.add('show');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+
+    try {
+      // 1. ¿Está en la lista de invitados?
+      const nombreLower = nombre.toLowerCase();
+      const boletos = INVITED_GUESTS[nombreLower];
+
+      if(boletos === undefined){
+        document.getElementById('err-no-invitado').classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Verificar invitación';
+        return;
+      }
+
+      // 2. ¿Ya está registrado?
+      const snap = await getDocs(
+        query(collection(db,'asistentes'), where('nombre_lower','==',nombreLower))
+      );
+      if(!snap.empty){
+        document.getElementById('err-duplicado').classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Verificar invitación';
+        return;
+      }
+
+      // ✓ Invitado válido y sin registro previo
+      foundBoletos = boletos;
+      lookupDone   = true;
+
+      // Mostrar banner
+      document.getElementById('ticket-num').textContent = boletos;
+      document.getElementById('ticket-sub').textContent =
+        boletos === 1 ? 'boleto asignado para ti' : 'boletos asignados para ti';
+      document.getElementById('ticket-banner').classList.add('show');
+
+      // Poblar selector
+      const sel = document.getElementById('boletos-usar');
+      sel.innerHTML = '<option value="">— Selecciona —</option>';
+      for(let i = 1; i <= boletos; i++){
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = i === 1 ? '1 lugar (solo yo)' : `${i} lugares (yo + ${i-1} acompañante${i-1>1?'s':''})`;
+        sel.appendChild(opt);
+      }
+
+      document.getElementById('ticket-selector').classList.add('show');
+      document.getElementById('extra-fields').classList.add('show');
+
+      btn.textContent = '✦ Invitado verificado';
+
+    } catch(e) {
+      console.error(e);
+      document.getElementById('err-no-invitado').classList.remove('show');
+      alert('Error de conexión. Intenta de nuevo.');
+      btn.disabled = false;
+      btn.textContent = 'Verificar invitación';
+    }
+  };
+
+  // Submit final
+  window.handleSubmit = async () => {
+    if(!lookupDone) return;
+
+    const nombre  = document.getElementById('nombre').value.trim();
+    const boletos = parseInt(document.getElementById('boletos-usar').value);
+    const pass    = document.getElementById('password').value;
+    const pass2   = document.getElementById('password2').value;
+    const btn     = document.getElementById('btn-enviar');
+    const btnTxt  = document.getElementById('btn-text');
+
+    ['err-boletos','err-pass','err-pass2','err-firebase'].forEach(id=>
       document.getElementById(id).classList.remove('show'));
 
     let ok = true;
-    if(nombre.split(' ').filter(Boolean).length < 2){
-      document.getElementById('err-nombre').classList.add('show'); ok=false;
+    if(!boletos || isNaN(boletos)){
+      document.getElementById('err-boletos').classList.add('show'); ok=false;
     }
     if(pass.length < 4){
       document.getElementById('err-pass').classList.add('show'); ok=false;
@@ -324,26 +481,19 @@
     }
     if(!ok) return;
 
-    btn.disabled=true; btnTxt.textContent='Verificando...';
+    btn.disabled=true; btnTxt.textContent='Guardando...';
 
     try {
-      const snap = await getDocs(
-        query(collection(db,'asistentes'), where('nombre_lower','==',nombre.toLowerCase()))
-      );
-      if(!snap.empty){
-        document.getElementById('err-duplicado').classList.add('show');
-        btn.disabled=false; btnTxt.textContent='Confirmar asistencia'; return;
-      }
-
-      btnTxt.textContent='Guardando...';
       const hash = await hashPass(pass);
 
       await addDoc(collection(db,'asistentes'),{
         nombre,
-        nombre_lower: nombre.toLowerCase(),
-        password_hash: hash,
-        fecha: new Date().toLocaleDateString('es-MX'),
-        timestamp: Date.now()
+        nombre_lower:   nombre.toLowerCase(),
+        password_hash:  hash,
+        boletos_asignados: foundBoletos,
+        boletos_usados:    boletos,
+        fecha:          new Date().toLocaleDateString('es-MX'),
+        timestamp:      Date.now()
       });
 
       document.getElementById('msg-ok').classList.add('show');

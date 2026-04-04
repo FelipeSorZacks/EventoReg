@@ -33,8 +33,19 @@
   .divider::before { content:''; flex:1; height:1px; background: linear-gradient(to right,transparent,var(--gold)); }
   .divider::after  { content:''; flex:1; height:1px; background: linear-gradient(to left,transparent,var(--gold)); }
   .divider-gem { width:6px;height:6px;background:var(--gold);transform:rotate(45deg); }
-  .count-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); padding: 8px 20px; font-size: 11px; letter-spacing: 0.3em; color: var(--text-muted); margin-top: 0.5rem; }
+
+  /* Counter badges */
+  .counter-area { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 0.5rem; }
+  .count-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); padding: 8px 20px; font-size: 11px; letter-spacing: 0.3em; color: var(--text-muted); }
   .count-badge strong { color: var(--gold); font-weight: 500; }
+  .count-badge.highlight { border-color: rgba(201,168,76,0.45); background: rgba(201,168,76,0.05); }
+
+  /* Capacity bar */
+  .capacity-bar-wrap { width: 100%; max-width: 320px; margin-top: 4px; }
+  .capacity-bar-track { height: 3px; background: rgba(201,168,76,0.12); width: 100%; position: relative; }
+  .capacity-bar-fill { height: 100%; background: linear-gradient(to right, var(--gold), var(--gold-light)); transition: width 0.6s ease; max-width: 100%; }
+  .capacity-label { font-size: 9px; letter-spacing: 0.3em; color: var(--text-muted); text-align: center; margin-top: 6px; text-transform: uppercase; }
+  .capacity-label span { color: var(--gold); }
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
   @keyframes slideIn{from{opacity:0;transform:translateX(-10px);}to{opacity:1;transform:translateX(0);}}
@@ -51,6 +62,7 @@
   .attendee-info { flex: 1; }
   .attendee-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; }
   .attendee-date { font-size: 10px; letter-spacing: 0.2em; color: var(--text-muted); margin-top: 2px; }
+  .attendee-seats { font-size: 10px; letter-spacing: 0.15em; color: var(--gold); margin-top: 3px; }
   .attendee-check { font-size: 10px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; opacity: 0.7; flex-shrink: 0; }
 
   /* Delete button */
@@ -128,8 +140,23 @@
     <p class="eyebrow">Lista oficial</p>
     <h1 class="page-title">Los que<br><em>asistirán</em></h1>
     <div class="divider"><div class="divider-gem"></div></div>
-    <div class="count-badge">
-      <strong id="total-count">—</strong> confirmados para la velada
+
+    <div class="counter-area">
+      <!-- Espacios ocupados (suma de boletos) -->
+      <div class="count-badge highlight">
+        <strong id="total-seats">—</strong>&nbsp;espacios reservados de 150 disponibles
+      </div>
+      <!-- Invitados principales -->
+      <div class="count-badge">
+        <strong id="total-count">—</strong>&nbsp;invitados principales confirmados
+      </div>
+      <!-- Barra de capacidad -->
+      <div class="capacity-bar-wrap">
+        <div class="capacity-bar-track">
+          <div class="capacity-bar-fill" id="capacity-bar" style="width:0%"></div>
+        </div>
+        <p class="capacity-label">Capacidad del evento: <span id="capacity-pct">0%</span></p>
+      </div>
     </div>
   </div>
 
@@ -146,6 +173,8 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, collection, getDocs, deleteDoc, doc, query, orderBy }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const MAX_CAPACITY = 150;
 
   const firebaseConfig = {
     apiKey: "AIzaSyCC_NG5KUl1lR75BJPc27Svc_G75bcplhM",
@@ -168,7 +197,7 @@
   }
 
   function escHtml(s){
-    return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
   async function hashPass(str){
@@ -217,7 +246,7 @@
       }
       await deleteDoc(doc(db, 'asistentes', pendingDocId));
       closeModal();
-      loadAsistentes(); // refresh list
+      loadAsistentes();
     } catch(e){
       console.error(e);
       document.getElementById('modal-error-fb').classList.add('show');
@@ -225,12 +254,9 @@
     }
   };
 
-  // Close modal on overlay click
   document.getElementById('modal').addEventListener('click', e => {
     if(e.target === document.getElementById('modal')) closeModal();
   });
-
-  // Enter key in password field
   document.addEventListener('keydown', e => {
     if(e.key === 'Escape') closeModal();
   });
@@ -244,9 +270,22 @@
       const lista = [];
       snap.forEach(d => lista.push({ id: d.id, ...d.data() }));
 
-      document.getElementById('total-count').textContent = lista.length;
+      // Contar invitados principales y total de espacios (boletos usados)
+      const totalInvitados = lista.length;
+      const totalEspacios  = lista.reduce((sum, a) => {
+        // Compatibilidad: si no tiene boletos_usados, se cuenta como 1
+        return sum + (parseInt(a.boletos_usados) || 1);
+      }, 0);
 
-      if(lista.length === 0){
+      document.getElementById('total-count').textContent = totalInvitados;
+      document.getElementById('total-seats').textContent = totalEspacios;
+
+      // Barra de capacidad
+      const pct = Math.min(Math.round((totalEspacios / MAX_CAPACITY) * 100), 100);
+      document.getElementById('capacity-bar').style.width = pct + '%';
+      document.getElementById('capacity-pct').textContent = pct + '%';
+
+      if(totalInvitados === 0){
         container.innerHTML = `
           <div class="empty-state">
             <p>Aún no hay confirmaciones</p>
@@ -257,6 +296,7 @@
 
       container.innerHTML = '';
       lista.forEach((a, i) => {
+        const boletos = parseInt(a.boletos_usados) || 1;
         const row = document.createElement('div');
         row.className = 'attendee-row';
         row.style.animationDelay = (i*0.06)+'s';
@@ -266,6 +306,12 @@
           <div class="attendee-info">
             <div class="attendee-name">${escHtml(a.nombre)}</div>
             <div class="attendee-date">Registrado el ${escHtml(a.fecha||'—')}</div>
+            <div class="attendee-seats">
+              ${boletos === 1
+                ? '✦ 1 lugar reservado (solo el titular)'
+                : `✦ ${boletos} lugares reservados (titular + ${boletos-1} acompañante${boletos-1>1?'s':''})`
+              }
+            </div>
           </div>
           <div class="attendee-check">✦ Confirmado</div>
           <button class="btn-delete" onclick="openDeleteModal('${escHtml(a.id)}','${escHtml(a.password_hash||'')}','${escHtml(a.nombre)}')">
