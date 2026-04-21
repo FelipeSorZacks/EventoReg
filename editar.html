@@ -98,8 +98,12 @@
   .action-divider::before, .action-divider::after { content:''; flex:1; height:1px; background:var(--border); }
   .action-divider span { font-size: 9px; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
 
-  footer { text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 10px; letter-spacing: 0.3em; color: var(--text-muted); }
-  @media(max-width:480px){ .card { padding: 1.8rem 1.5rem; } }
+
+    /* ── FOOTER ── */
+  footer { position: relative; z-index: 1; text-align: center; padding: 2.5rem; border-top: 1px solid var(--border); font-size: 10px; letter-spacing: .3em; color: var(--text-muted); }
+  .footer-admin { display: inline-block; margin-top: .8rem; font-size: 9px; letter-spacing: .2em; color: rgba(201,168,76,.18); text-decoration: none; transition: color .4s; }
+  .footer-admin:hover { color: rgba(201,168,76,.5); }
+
 </style>
 </head>
 <body>
@@ -107,20 +111,16 @@
 
 <div class="wrapper">
   <div class="top-bar">
-    <a href="asistentes.html" class="back-link">
+    <a href="index.html" class="back-link">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      Ver lista de asistentes
-    </a>
-    <a href="index.html" class="back-link" style="color:var(--text-muted);font-size:9px;">
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      Volver al evento
+      Volver a la invitacion
     </a>
   </div>
 
   <div class="page-header">
     <p class="eyebrow">Tu asistencia</p>
     <h1 class="page-title">Actualizar o cancelar<br><em>mi registro</em></h1>
-    <p class="page-sub">Busca tu nombre, verifica tu contraseña<br>y elige qué deseas modificar.</p>
+    <!--<p class="page-sub">Busca tu nombre, verifica tu contraseña<br>y elige qué deseas modificar.</p>-->
   </div>
 
   <div class="card">
@@ -137,7 +137,7 @@
       <!-- Paso 1: buscar -->
       <div class="step active" id="edit-step1">
         <div class="field">
-          <label>Nombre completo</label>
+          <label>Nombre del destinatario</label>
           <input type="text" id="edit-nombre" placeholder="Tu nombre completo" autocomplete="off">
           <p class="err" id="edit-err-nombre">Ingresa nombre y apellido.</p>
           <p class="err" id="edit-err-nofound">No encontramos ese registro. ¿Ya confirmaste tu asistencia?</p>
@@ -180,7 +180,7 @@
       <!-- Paso 1: buscar -->
       <div class="step active" id="cancel-step1">
         <div class="field">
-          <label>Nombre completo</label>
+          <label>Nombre del destinatario</label>
           <input type="text" id="cancel-nombre" placeholder="Tu nombre completo" autocomplete="off">
           <p class="err" id="cancel-err-nombre">Ingresa nombre y apellido.</p>
           <p class="err" id="cancel-err-nofound">No encontramos ese registro. ¿Ya confirmaste tu asistencia?</p>
@@ -214,7 +214,11 @@
 
   </div><!-- /card -->
 
-  <footer>&copy; 2025 · The Grand Event · Gestión de registro</footer>
+  <footer>
+  &copy; 2026 &nbsp;·&nbsp; Rebeca &amp; Sebastian &nbsp;·&nbsp; 8 de agosto
+  <br>
+  <a href="admin.html" class="footer-admin">admin</a>
+</footer>
 </div>
 
 <script type="module">
