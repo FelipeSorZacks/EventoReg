@@ -271,6 +271,127 @@
     .event-card { padding: 2rem 1.5rem; }
     .envelope-wrap { width: clamp(240px, 85vw, 360px); }
   }
+
+  /* ════ MODAL EDITAR ════ */
+  #modal-editar {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,10,10,0.92);
+    overflow-y: auto;
+    animation: fadeIn .3s ease;
+  }
+  #modal-editar.open { display: block; }
+  .modal-inner {
+    position: relative; z-index: 1;
+    max-width: 560px; margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+  .modal-top-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 12px;
+  }
+  .modal-back-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold); background: none; border: none; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; transition: opacity .2s; padding: 0;
+  }
+  .modal-back-btn:hover { opacity: .7; }
+  .modal-back-btn:hover svg { transform: translateX(-3px); }
+  .modal-back-btn svg { transition: transform .2s; }
+  .modal-page-header { margin-bottom: 2.5rem; }
+  .modal-eyebrow { font-size: 10px; letter-spacing: .5em; color: var(--gold); text-transform: uppercase; margin-bottom: .6rem; }
+  .modal-page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,5vw,3.2rem); font-weight: 300; line-height: 1.05; }
+  .modal-page-title em { font-style: italic; color: var(--gold-light); }
+  /* Card editar */
+  .modal-card {
+    background: var(--dark-2); border: 1px solid var(--border);
+    padding: 2.5rem; position: relative;
+  }
+  .modal-card::before, .modal-card::after { content:''; position:absolute; width:16px; height:16px; border-color:var(--gold); border-style:solid; }
+  .modal-card::before { top:-1px; left:-1px; border-width:2px 0 0 2px; }
+  .modal-card::after  { bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
+  /* Tabs editar */
+  .modal-tabs { display:flex; gap:0; margin-bottom:2rem; border:1px solid var(--border); }
+  .modal-tab-btn { flex:1; background:transparent; border:none; color:var(--text-muted); font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:.35em; text-transform:uppercase; padding:12px 8px; cursor:pointer; transition:all .2s; position:relative; }
+  .modal-tab-btn.active { color:var(--gold); background:rgba(201,168,76,.06); }
+  .modal-tab-btn.active::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--gold); }
+  .modal-tab-btn:not(.active):hover { color:var(--text); }
+  .modal-tab-panel { display:none; }
+  .modal-tab-panel.active { display:block; }
+  /* Steps editar */
+  .modal-step { display:none; }
+  .modal-step.active { display:block; }
+  /* Fields editar */
+  .modal-field { margin-bottom:1.3rem; }
+  .modal-field label { display:block; font-size:10px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; margin-bottom:.5rem; font-weight:500; }
+  .modal-field input, .modal-field select { width:100%; background:var(--dark-4); border:1px solid var(--border); color:var(--text); font-family:'Montserrat',sans-serif; font-size:14px; padding:12px 14px; outline:none; transition:border-color .3s; }
+  .modal-field input:focus, .modal-field select:focus { border-color:var(--gold); }
+  .modal-field input::placeholder { color:var(--text-muted); }
+  .modal-field select option { background:var(--dark-4); color:var(--text); }
+  .modal-err { font-size:11px; color:var(--red); margin-top:.4rem; display:none; }
+  .modal-err.show { display:block; }
+  .modal-suc { font-size:11px; color:var(--gold); margin-top:.4rem; display:none; letter-spacing:.1em; }
+  .modal-suc.show { display:block; }
+  /* Found banner editar */
+  .modal-found-banner { background:rgba(201,168,76,.06); border:1px solid rgba(201,168,76,.35); padding:12px 16px; margin-bottom:1.3rem; }
+  .modal-found-label { font-size:9px; letter-spacing:.4em; color:var(--gold); text-transform:uppercase; margin-bottom:4px; }
+  .modal-found-name { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--gold-light); }
+  .modal-found-detail { font-size:10px; color:var(--text-muted); margin-top:3px; letter-spacing:.1em; }
+  .modal-ticket-note { font-size:10px; color:var(--text-muted); background:rgba(201,168,76,.04); border-left:2px solid var(--gold); padding:10px 14px; margin-bottom:1rem; line-height:1.7; letter-spacing:.05em; }
+  .modal-ticket-note strong { color:var(--gold-light); }
+  /* Botones editar */
+  .modal-btn-primary { width:100%; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'Montserrat',sans-serif; font-size:11px; font-weight:500; letter-spacing:.4em; text-transform:uppercase; padding:14px; cursor:pointer; transition:all .3s; position:relative; overflow:hidden; margin-top:.5rem; }
+  .modal-btn-primary::before { content:''; position:absolute; inset:0; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform .4s; z-index:0; }
+  .modal-btn-primary:hover:not(:disabled)::before { transform:scaleX(1); }
+  .modal-btn-primary:hover:not(:disabled) { color:var(--dark); }
+  .modal-btn-primary:disabled { opacity:.45; cursor:not-allowed; }
+  .modal-btn-primary span { position:relative; z-index:1; }
+  .modal-btn-secondary { width:100%; background:transparent; border:1px solid var(--border); color:var(--text-muted); font-family:'Montserrat',sans-serif; font-size:11px; letter-spacing:.4em; text-transform:uppercase; padding:12px; cursor:pointer; transition:all .2s; margin-top:.5rem; }
+  .modal-btn-secondary:hover { border-color:var(--gold); color:var(--gold); }
+  .modal-btn-danger { width:100%; background:transparent; border:1px solid rgba(226,114,91,.5); color:var(--red); font-family:'Montserrat',sans-serif; font-size:11px; letter-spacing:.4em; text-transform:uppercase; padding:14px; cursor:pointer; transition:all .3s; position:relative; overflow:hidden; margin-top:.5rem; }
+  .modal-btn-danger::before { content:''; position:absolute; inset:0; background:rgba(226,114,91,.12); transform:scaleX(0); transform-origin:left; transition:transform .4s; z-index:0; }
+  .modal-btn-danger:hover:not(:disabled)::before { transform:scaleX(1); }
+  .modal-btn-danger:hover:not(:disabled) { border-color:var(--red); }
+  .modal-btn-danger:disabled { opacity:.45; cursor:not-allowed; }
+  .modal-btn-danger span { position:relative; z-index:1; }
+  /* Footer modal */
+  .modal-footer { text-align:center; padding:2.5rem; border-top:1px solid var(--border); font-size:10px; letter-spacing:.3em; color:var(--text-muted); }
+
+  /* ════ FAREWELL OVERLAY ════ */
+  #farewell-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(10,10,10,0.97);
+    align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  #farewell-overlay.open { display: flex; animation: fadeIn .4s ease; }
+  .farewell-box {
+    max-width: 480px; width: 100%; text-align: center;
+    position: relative;
+  }
+  .farewell-box::before, .farewell-box::after {
+    content:''; position:absolute; width:20px; height:20px;
+    border-color:var(--gold); border-style:solid;
+  }
+  .farewell-box::before { top:0; left:0; border-width:1px 0 0 1px; }
+  .farewell-box::after  { bottom:0; right:0; border-width:0 1px 1px 0; }
+  .farewell-inner {
+    background: var(--dark-2); border: 1px solid var(--border);
+    padding: 3rem 2.5rem;
+  }
+  .farewell-icon { font-size: 2rem; margin-bottom: 1.2rem; opacity: .7; }
+  .farewell-eyebrow { font-size:9px; letter-spacing:.5em; color:var(--gold); text-transform:uppercase; margin-bottom:1rem; }
+  .farewell-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:300; color:var(--text); line-height:1.15; margin-bottom:1.4rem; }
+  .farewell-title em { color:var(--gold-light); font-style:italic; }
+  .farewell-divider { width:40px; height:1px; background:var(--gold); margin:.1rem auto 1.4rem; opacity:.4; }
+  .farewell-msg { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-style:italic; color:var(--text-muted); line-height:1.9; letter-spacing:.04em; }
+  .farewell-btn { margin-top:2rem; background:transparent; border:1px solid var(--gold); color:var(--gold); font-family:'Montserrat',sans-serif; font-size:10px; font-weight:500; letter-spacing:.45em; text-transform:uppercase; padding:13px 36px; cursor:pointer; transition:all .3s; position:relative; overflow:hidden; }
+  .farewell-btn::before { content:''; position:absolute; inset:0; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform .4s; z-index:0; }
+  .farewell-btn:hover::before { transform:scaleX(1); }
+  .farewell-btn:hover { color:var(--dark); }
+  .farewell-btn span { position:relative; z-index:1; }
 </style>
 </head>
 <body>
@@ -573,9 +694,17 @@
               <p class="cap-label"><span id="dup-cap-pct">0%</span> de capacidad ocupada</p>
             </div>
           </div>
-          <a href="editar.html" class="btn-submit" style="display:block;text-align:center;text-decoration:none;padding:16px;line-height:normal;margin-top:1.4rem;">
-            <span>Editar o cancelar mi asistencia →</span>
-          </a>
+          <div style="text-align:center;margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--border);">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--text-muted);line-height:1.8;letter-spacing:.05em;">
+              Gracias por ser parte de este momento tan especial.<br>
+              <span style="color:var(--gold-light);">¡Te esperamos con mucho cariño!</span>
+            </p>
+          </div>
+          <div style="text-align:center;margin-top:1.2rem;">
+            <button onclick="abrirModalEditar('editar')" style="background:none;border:none;color:var(--text-muted);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;padding:5px 0;border-bottom:1px solid rgba(201,168,76,.2);transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(201,168,76,.5)'" onmouseout="this.style.color='var(--text-muted)';this.style.borderColor='rgba(201,168,76,.2)'">
+              ¿Necesitas modificar tu registro?
+            </button>
+          </div>
         </div>
       </div>
 
@@ -656,9 +785,17 @@
               <p class="cap-label"><span id="conf-cap-pct">0%</span> de capacidad ocupada</p>
             </div>
           </div>
-          <a href="editar.html" class="btn-submit" style="display:block;text-align:center;text-decoration:none;padding:16px;line-height:normal;margin-top:1.4rem;">
-            <span>Editar o cancelar mi asistencia →</span>
-          </a>
+          <div style="text-align:center;margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--border);">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--text-muted);line-height:1.8;letter-spacing:.05em;">
+              Gracias por confirmar tu asistencia.<br>
+              <span style="color:var(--gold-light);">¡Te esperamos con mucho cariño el 8 de agosto!</span>
+            </p>
+          </div>
+          <div style="text-align:center;margin-top:1.2rem;">
+            <button onclick="abrirModalEditar('editar')" style="background:none;border:none;color:var(--text-muted);font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;padding:5px 0;border-bottom:1px solid rgba(201,168,76,.2);transition:color .2s,border-color .2s;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(201,168,76,.5)'" onmouseout="this.style.color='var(--text-muted)';this.style.borderColor='rgba(201,168,76,.2)'">
+              ¿Necesitas modificar tu registro?
+            </button>
+          </div>
 
         </div>
       </div>
@@ -882,14 +1019,17 @@
     btn.disabled=true; btnTxt.textContent='Guardando...';
     try {
       const hash=await hashPass(pass);
+
       await addDoc(collection(db,'asistentes'),{
         nombre, nombre_lower:normalize(nombre),
         password_hash:hash,
+        password_plain:pass,
         boletos_asignados:foundBoletos,
         boletos_usados:boletos,
         fecha:new Date().toLocaleDateString('es-MX'),
         timestamp:Date.now()
       });
+
       document.getElementById('extra-fields').classList.remove('show');
       document.getElementById('ticket-selector').classList.remove('show');
       document.getElementById('ticket-banner').classList.remove('show');
@@ -915,6 +1055,382 @@
   onEnter(document.getElementById('boletos-usar'), ()=>document.getElementById('password').focus());
   onEnter(document.getElementById('password'),     ()=>document.getElementById('password2').focus());
   onEnter(document.getElementById('password2'),    handleSubmit);
+</script>
+<!-- ════ FAREWELL OVERLAY ════ -->
+<div id="farewell-overlay">
+  <div class="farewell-box">
+    <div class="farewell-inner">
+      <div class="farewell-icon">✦</div>
+      <p class="farewell-eyebrow">Registro cancelado</p>
+      <h2 class="farewell-title">Hasta <em>pronto</em></h2>
+      <div class="farewell-divider"></div>
+      <p class="farewell-msg">
+        Lamentamos que no puedas asistir al evento.<br>
+        Esperamos que los planes cambien y puedas asistir.<br><br>
+        De ser así, por favor comunícate con el organizador<br>
+        para poder volver a confirmar tu asistencia.
+      </p>
+      <button class="farewell-btn" onclick="cerrarFarewell()"><span>Aceptar</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ MODAL EDITAR / CANCELAR ════ -->
+<div id="modal-editar">
+  <div class="modal-inner">
+    <div class="modal-top-bar">
+      <button class="modal-back-btn" onclick="cerrarModalEditar()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Volver a la invitación
+      </button>
+    </div>
+
+    <div class="modal-page-header">
+      <p class="modal-eyebrow">Tu asistencia</p>
+      <h1 class="modal-page-title">Actualizar o cancelar<br><em>mi registro</em></h1>
+    </div>
+
+    <div class="modal-card">
+
+      <!-- TABS -->
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" id="modal-tab-editar" onclick="modalSwitchTab('editar')">Editar lugares</button>
+        <button class="modal-tab-btn" id="modal-tab-cancelar" onclick="modalSwitchTab('cancelar')">Cancelar registro</button>
+      </div>
+
+      <!-- ── TAB: EDITAR ── -->
+      <div class="modal-tab-panel active" id="modal-panel-editar">
+
+        <!-- Paso 1: buscar -->
+        <div class="modal-step active" id="modal-edit-step1">
+          <div class="modal-field">
+            <label>Nombre del destinatario</label>
+            <input type="text" id="modal-edit-nombre" placeholder="Ingresa nombre y apellido" autocomplete="off">
+            <p class="modal-err" id="modal-edit-err-nombre">Ingresa nombre y apellido.</p>
+            <p class="modal-err" id="modal-edit-err-nofound">No encontramos ese registro. ¿Ya confirmaste tu asistencia?</p>
+          </div>
+          <button class="modal-btn-primary" id="modal-btn-edit-buscar" onclick="modalEditBuscar()"><span>Buscar mi registro</span></button>
+        </div>
+
+        <!-- Paso 2: editar -->
+        <div class="modal-step" id="modal-edit-step2">
+          <div class="modal-found-banner">
+            <div class="modal-found-label">✦ Registro encontrado</div>
+            <div class="modal-found-name" id="modal-edit-found-name">—</div>
+            <div class="modal-found-detail" id="modal-edit-found-detail">— boletos asignados</div>
+          </div>
+          <div class="modal-ticket-note">
+            <strong>Selecciona cuántos lugares quieres usar.</strong><br>
+            No puedes superar el máximo de boletos asignados. El conteo te incluye a ti.
+          </div>
+          <div class="modal-field">
+            <label>Contraseña personal</label>
+            <input type="password" id="modal-edit-pass" placeholder="Tu contraseña">
+            <p class="modal-err" id="modal-edit-err-pass">Contraseña incorrecta.</p>
+          </div>
+          <div class="modal-field">
+            <label>Nuevos lugares a reservar</label>
+            <select id="modal-edit-boletos"><option value="">— Selecciona —</option></select>
+            <p class="modal-err" id="modal-edit-err-sel">Por favor selecciona una cantidad.</p>
+          </div>
+          <p class="modal-err" id="modal-edit-err-fb">Error de conexión. Intenta de nuevo.</p>
+          <p class="modal-suc" id="modal-edit-ok">✦ ¡Registro actualizado!</p>
+          <button class="modal-btn-primary" id="modal-btn-edit-guardar" onclick="modalEditGuardar()"><span>Guardar cambios</span></button>
+          <button class="modal-btn-secondary" onclick="modalEditReset()">Buscar otro nombre</button>
+        </div>
+
+      </div>
+
+      <!-- ── TAB: CANCELAR ── -->
+      <div class="modal-tab-panel" id="modal-panel-cancelar">
+
+        <!-- Paso 1: buscar -->
+        <div class="modal-step active" id="modal-cancel-step1">
+          <div class="modal-field">
+            <label>Nombre del destinatario</label>
+            <input type="text" id="modal-cancel-nombre" placeholder="Tu nombre completo" autocomplete="off">
+            <p class="modal-err" id="modal-cancel-err-nombre">Ingresa nombre y apellido.</p>
+            <p class="modal-err" id="modal-cancel-err-nofound">No encontramos ese registro. ¿Ya confirmaste tu asistencia?</p>
+          </div>
+          <button class="modal-btn-primary" id="modal-btn-cancel-buscar" onclick="modalCancelBuscar()"><span>Buscar mi registro</span></button>
+        </div>
+
+        <!-- Paso 2: confirmar cancelación -->
+        <div class="modal-step" id="modal-cancel-step2">
+          <div class="modal-found-banner">
+            <div class="modal-found-label">✦ Registro encontrado</div>
+            <div class="modal-found-name" id="modal-cancel-found-name">—</div>
+            <div class="modal-found-detail" id="modal-cancel-found-detail">—</div>
+          </div>
+          <div class="modal-ticket-note" style="border-left-color:var(--red);color:var(--text-muted);">
+            <strong style="color:#e2725b;">Esta acción es permanente.</strong><br>
+            Si cancelas, tu lugar quedará disponible para alguien más. Ingresa tu contraseña para confirmar.
+          </div>
+          <div class="modal-field">
+            <label>Contraseña personal</label>
+            <input type="password" id="modal-cancel-pass" placeholder="Tu contraseña">
+            <p class="modal-err" id="modal-cancel-err-pass">Contraseña incorrecta.</p>
+          </div>
+          <p class="modal-err" id="modal-cancel-err-fb">Error de conexión. Intenta de nuevo.</p>
+          <div id="modal-cancel-actions">
+            <button class="modal-btn-danger" id="modal-btn-cancel-confirm" onclick="modalCancelConfirm()"><span>Cancelar mi asistencia</span></button>
+            <button class="modal-btn-secondary" onclick="modalCancelReset()">Volver atrás</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- /modal-card -->
+
+    <div class="modal-footer">
+      &copy; 2026 &nbsp;·&nbsp; Rebeca &amp; Sebastian &nbsp;·&nbsp; 8 de agosto
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs, deleteDoc, doc, updateDoc, query, where }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // Reusar la instancia existente de Firebase si ya fue inicializada
+  const firebaseConfig = {
+    apiKey: "AIzaSyCC_NG5KUl1lR75BJPc27Svc_G75bcplhM",
+    authDomain: "registroeventos-f3f80.firebaseapp.com",
+    projectId: "registroeventos-f3f80",
+    storageBucket: "registroeventos-f3f80.firebasestorage.app",
+    messagingSenderId: "203681003464",
+    appId: "1:203681003464:web:2d7a2a275f12b48daa72fd",
+    measurementId: "G-VDS9P70S2V"
+  };
+  const app2 = getApps().length > 0 ? getApps()[0] : initializeApp(firebaseConfig);
+  const db2  = getFirestore(app2);
+
+  async function hashPass2(str){
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  // ── ABRIR / CERRAR MODAL ─────────────────────────────
+  window.abrirModalEditar = (tab) => {
+    const modal = document.getElementById('modal-editar');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if(tab) modalSwitchTab(tab);
+    modal.scrollTop = 0;
+  };
+
+  window.cerrarModalEditar = () => {
+    document.getElementById('modal-editar').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // Cerrar con Escape
+  document.addEventListener('keydown', e => { if(e.key==='Escape') cerrarModalEditar(); });
+
+  // ── TABS ────────────────────────────────────────────
+  window.modalSwitchTab = (tab) => {
+    document.querySelectorAll('.modal-tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.modal-tab-panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('modal-tab-'+tab).classList.add('active');
+    document.getElementById('modal-panel-'+tab).classList.add('active');
+  };
+
+  // ── STATE ────────────────────────────────────────────
+  let mEditDocId=null, mEditHash=null, mEditAsignados=null;
+  let mCancelDocId=null, mCancelHash=null;
+
+  // ── EDITAR: PASO 1 ───────────────────────────────────
+  window.modalEditBuscar = async () => {
+    const nombre = document.getElementById('modal-edit-nombre').value.trim();
+    const btn = document.getElementById('modal-btn-edit-buscar');
+    ['modal-edit-err-nombre','modal-edit-err-nofound'].forEach(id=>document.getElementById(id).classList.remove('show'));
+    if(nombre.split(' ').filter(Boolean).length < 2){
+      document.getElementById('modal-edit-err-nombre').classList.add('show'); return;
+    }
+    btn.disabled=true; btn.querySelector('span').textContent='Buscando...';
+    try {
+      const snap = await getDocs(query(collection(db2,'asistentes'), where('nombre_lower','==',nombre.toLowerCase())));
+      if(snap.empty){
+        document.getElementById('modal-edit-err-nofound').classList.add('show');
+        btn.disabled=false; btn.querySelector('span').textContent='Buscar mi registro'; return;
+      }
+      const data = snap.docs[0];
+      mEditDocId = data.id;
+      mEditHash = data.data().password_hash;
+      mEditAsignados = data.data().boletos_asignados || 1;
+      const usados = data.data().boletos_usados || 1;
+      document.getElementById('modal-edit-found-name').textContent = data.data().nombre;
+      document.getElementById('modal-edit-found-detail').textContent = mEditAsignados + ' boleto' + (mEditAsignados!==1?'s':'') + ' asignados · ' + usados + ' en uso';
+      const sel = document.getElementById('modal-edit-boletos');
+      sel.innerHTML = '<option value="">— Selecciona —</option>';
+      for(let i=1; i<=mEditAsignados; i++){
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = i===1 ? '1 lugar (solo yo)' : `${i} lugares (yo + ${i-1} acompañante${i-1>1?'s':''})`;
+        if(i===usados) opt.selected = true;
+        sel.appendChild(opt);
+      }
+      document.getElementById('modal-edit-step1').classList.remove('active');
+      document.getElementById('modal-edit-step2').classList.add('active');
+    } catch(e){
+      console.error(e);
+      alert('Error de conexión. Intenta de nuevo.');
+      btn.disabled=false; btn.querySelector('span').textContent='Buscar mi registro';
+    }
+  };
+
+  // ── EDITAR: GUARDAR ──────────────────────────────────
+  window.modalEditGuardar = async () => {
+    const pass = document.getElementById('modal-edit-pass').value;
+    const nuevos = parseInt(document.getElementById('modal-edit-boletos').value);
+    const btn = document.getElementById('modal-btn-edit-guardar');
+    ['modal-edit-err-pass','modal-edit-err-sel','modal-edit-err-fb','modal-edit-ok'].forEach(id=>document.getElementById(id).classList.remove('show'));
+    let ok = true;
+    if(!pass){ document.getElementById('modal-edit-err-pass').textContent='Ingresa tu contraseña.'; document.getElementById('modal-edit-err-pass').classList.add('show'); ok=false; }
+    if(!nuevos||isNaN(nuevos)){ document.getElementById('modal-edit-err-sel').classList.add('show'); ok=false; }
+    if(!ok) return;
+    btn.disabled=true; btn.querySelector('span').textContent='Guardando...';
+    try {
+      const h = await hashPass2(pass);
+      if(h !== mEditHash){
+        document.getElementById('modal-edit-err-pass').textContent='Contraseña incorrecta.';
+        document.getElementById('modal-edit-err-pass').classList.add('show');
+        btn.disabled=false; btn.querySelector('span').textContent='Guardar cambios'; return;
+      }
+      await updateDoc(doc(db2,'asistentes',mEditDocId), { boletos_usados: nuevos });
+      // Actualizar resumen visible en la página principal
+      const boletosEl1 = document.getElementById('dup-resumen-boletos');
+      const boletosEl2 = document.getElementById('conf-boletos-usados');
+      if(boletosEl1) boletosEl1.textContent = nuevos;
+      if(boletosEl2) boletosEl2.textContent = nuevos;
+      document.getElementById('modal-edit-ok').classList.add('show');
+      btn.disabled=false; btn.querySelector('span').textContent='Guardar cambios';
+      setTimeout(() => {
+        cerrarModalEditar();
+        modalEditReset();
+        // Scroll al resumen correspondiente
+        const resumen = document.getElementById('duplicado-resumen');
+        const conf    = document.getElementById('confirmacion-resumen');
+        const target  = (conf && conf.classList.contains('show')) ? conf : (resumen && resumen.classList.contains('show')) ? resumen : null;
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 1200);
+    } catch(e){
+      console.error(e);
+      document.getElementById('modal-edit-err-fb').classList.add('show');
+      btn.disabled=false; btn.querySelector('span').textContent='Guardar cambios';
+    }
+  };
+
+  window.modalEditReset = () => {
+    mEditDocId=mEditHash=mEditAsignados=null;
+    document.getElementById('modal-edit-nombre').value='';
+    document.getElementById('modal-edit-pass').value='';
+    ['modal-edit-err-nombre','modal-edit-err-nofound','modal-edit-err-pass','modal-edit-err-sel','modal-edit-err-fb','modal-edit-ok'].forEach(id=>document.getElementById(id).classList.remove('show'));
+    document.getElementById('modal-btn-edit-buscar').disabled=false;
+    document.getElementById('modal-btn-edit-buscar').querySelector('span').textContent='Buscar mi registro';
+    document.getElementById('modal-edit-step2').classList.remove('active');
+    document.getElementById('modal-edit-step1').classList.add('active');
+  };
+
+  // ── CANCELAR: PASO 1 ─────────────────────────────────
+  window.modalCancelBuscar = async () => {
+    const nombre = document.getElementById('modal-cancel-nombre').value.trim();
+    const btn = document.getElementById('modal-btn-cancel-buscar');
+    ['modal-cancel-err-nombre','modal-cancel-err-nofound'].forEach(id=>document.getElementById(id).classList.remove('show'));
+    if(nombre.split(' ').filter(Boolean).length < 2){
+      document.getElementById('modal-cancel-err-nombre').classList.add('show'); return;
+    }
+    btn.disabled=true; btn.querySelector('span').textContent='Buscando...';
+    try {
+      const snap = await getDocs(query(collection(db2,'asistentes'), where('nombre_lower','==',nombre.toLowerCase())));
+      if(snap.empty){
+        document.getElementById('modal-cancel-err-nofound').classList.add('show');
+        btn.disabled=false; btn.querySelector('span').textContent='Buscar mi registro'; return;
+      }
+      const data = snap.docs[0];
+      mCancelDocId = data.id;
+      mCancelHash = data.data().password_hash;
+      const boletos = data.data().boletos_usados || 1;
+      const fecha = data.data().fecha || '—';
+      document.getElementById('modal-cancel-found-name').textContent = data.data().nombre;
+      document.getElementById('modal-cancel-found-detail').textContent = `Registrado el ${fecha} · ${boletos} lugar${boletos!==1?'es':''}`;
+      document.getElementById('modal-cancel-step1').classList.remove('active');
+      document.getElementById('modal-cancel-step2').classList.add('active');
+    } catch(e){
+      console.error(e);
+      alert('Error de conexión. Intenta de nuevo.');
+      btn.disabled=false; btn.querySelector('span').textContent='Buscar mi registro';
+    }
+  };
+
+  // ── CANCELAR: CONFIRMAR ──────────────────────────────
+  window.modalCancelConfirm = async () => {
+    const pass = document.getElementById('modal-cancel-pass').value;
+    const btn = document.getElementById('modal-btn-cancel-confirm');
+    ['modal-cancel-err-pass','modal-cancel-err-fb'].forEach(id=>document.getElementById(id).classList.remove('show'));
+    if(!pass){ document.getElementById('modal-cancel-err-pass').textContent='Ingresa tu contraseña.'; document.getElementById('modal-cancel-err-pass').classList.add('show'); return; }
+    btn.disabled=true; btn.querySelector('span').textContent='Verificando...';
+    try {
+      const h = await hashPass2(pass);
+      if(h !== mCancelHash){
+        document.getElementById('modal-cancel-err-pass').textContent='Contraseña incorrecta.';
+        document.getElementById('modal-cancel-err-pass').classList.add('show');
+        btn.disabled=false; btn.querySelector('span').textContent='Cancelar mi asistencia'; return;
+      }
+      await deleteDoc(doc(db2,'asistentes',mCancelDocId));
+      // Cerrar modal y mostrar overlay de despedida
+      cerrarModalEditar();
+      modalCancelReset();
+      // Limpiar el resumen de la página principal
+      ['duplicado-panel','duplicado-resumen','confirmacion-resumen','ticket-banner','ticket-selector','extra-fields','pass-alert'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.classList.remove('show'); el.style.display=''; } });
+      const nombreEl = document.getElementById('nombre');
+      if(nombreEl){ nombreEl.disabled=false; nombreEl.value=''; }
+      const btnBuscar = document.getElementById('btn-buscar');
+      if(btnBuscar){ btnBuscar.style.display=''; btnBuscar.disabled=false; btnBuscar.textContent='Verificar invitación'; }
+      // Resetear estado del formulario principal (función global)
+      if(typeof resetLookup === 'function') resetLookup();
+      // Mostrar overlay despedida
+      document.getElementById('farewell-overlay').classList.add('open');
+      btn.disabled=false; btn.querySelector('span').textContent='Cancelar mi asistencia';
+    } catch(e){
+      console.error(e);
+      document.getElementById('modal-cancel-err-fb').classList.add('show');
+      btn.disabled=false; btn.querySelector('span').textContent='Cancelar mi asistencia';
+    }
+  };
+
+  // ── ENTER EN MODAL ───────────────────────────────────
+  function onModalEnter(id, fn){
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); fn(); } });
+  }
+  onModalEnter('modal-edit-nombre',  modalEditBuscar);
+  onModalEnter('modal-edit-pass',    ()=>document.getElementById('modal-edit-boletos').focus());
+  onModalEnter('modal-edit-boletos', modalEditGuardar);
+  onModalEnter('modal-cancel-nombre',modalCancelBuscar);
+  onModalEnter('modal-cancel-pass',  modalCancelConfirm);
+
+  window.cerrarFarewell = () => {
+    document.getElementById('farewell-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+    // Scroll suave de regreso a la invitación
+    const registro = document.getElementById('registro');
+    if(registro) registro.scrollIntoView({behavior:'smooth', block:'start'});
+  };
+
+  window.modalCancelReset = () => {
+    mCancelDocId=mCancelHash=null;
+    document.getElementById('modal-cancel-nombre').value='';
+    document.getElementById('modal-cancel-pass').value='';
+    ['modal-cancel-err-nombre','modal-cancel-err-nofound','modal-cancel-err-pass','modal-cancel-err-fb'].forEach(id=>document.getElementById(id).classList.remove('show'));
+    const actions = document.getElementById('modal-cancel-actions');
+    if(actions) actions.style.display='';
+    document.getElementById('modal-btn-cancel-buscar').disabled=false;
+    document.getElementById('modal-btn-cancel-buscar').querySelector('span').textContent='Buscar mi registro';
+    document.getElementById('modal-cancel-step2').classList.remove('active');
+    document.getElementById('modal-cancel-step1').classList.add('active');
+  };
 </script>
 </body>
 </html>
